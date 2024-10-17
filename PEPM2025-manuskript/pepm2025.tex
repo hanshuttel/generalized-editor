@@ -641,7 +641,7 @@ $a$ and the root is the operator $o$.
 
 The modality $\Diamond o$ is satisfied for $a$ when the operator $o$ is
 found somewhere within $a$. The modality
-$\square o$ holds for $a$ when $o$ is found in every subtree of the
+$\square o$ holds for $a$ when $o$ is found somewhere in every subtree of the
 \abt encapsulated by the cursor. 
 
 % \begin{example}\label{ex:modal_logic}
@@ -746,7 +746,7 @@ each part of it can be seen in \cref{tab:encoding_requirements}.
 where $\tau_s$ is a type for each sort $s \in \mathcal{S}$ and $\tau
 \to \tau$ and $\tau \times \tau$ are function and product types,
 respectively, and $\Gamma$ is a type environment
- $\Gamma : \Var \pra \Types$.
+ $\Gamma : \Var \rightharpoonup \Types$.
 
  The type systems all satisfy the subject
  reduction property.
@@ -1138,16 +1138,16 @@ $\square o$ consists of either applying $\Diamond o$ on all the children of the 
     typings;  any variable $C_i$ has type $Ctx$.
     \begin{small}
     \begin{align*}
-         &\ \encode{\text{child\ $2$.nil $\ggg$ parent.nil}} \\
-         =&\ \lambda C_1 . \encode{\text{parent.nil}} (\encode{\text{child\ $2$.nil}} C_1) \\
-         =&\ \lambda C_1 . (\lambda C_2 . \encode{\nil }(\encode{\parnt} C_2.1, C_2.2)) (\encode{\text{child\ $2$.nil}} C_1) \\
-         =&\ \lambda C_1 . (\lambda C_2 . \encode{nil}(up\ C_2.1, C_2.2)) (\encode{child\ 2.nil} C_1) \\
-         =&\ \lambda C_1 . (\lambda C_2 . (\lambda C_3 . C_3)(up\ C_2.1, C_2.2)) (\encode{child\ 2.nil} C_1) \\
-         \betar&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\encode{child\ 2.nil} C_1) \\
-         =&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . \encode{nil} (\encode{child\ 2} C_3.1, C_3.2)C_1) \\
-         =&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . (\lambda C_4.C_4) (\encode{child\ 2} C_3.1, C_3.2)C_1) \\
-         \betar&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . (\encode{child\ 2} C_3.1, C_3.2)C_1) \\
-         =&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . right (\encode{child\ 1} (C_3.1, C_3.2))C_1) \\
+         &\ \encode{\chld\ 2.\nil \ggg \parnt.\nil} \\
+         =&\ \lambda C_1 . \encode{\parnt.\nil}(\encode{\chld\ 2.\nil} C_1) \\
+         =&\ \lambda C_1 . (\lambda C_2 . \encode{\nil }(\encode{\parnt} C_2.1, C_2.2)) (\encode{\chld\ 2.\nil} C_1) \\
+         =&\ \lambda C_1 . (\lambda C_2 . \encode{\nil}(up\ C_2.1, C_2.2)) (\encode{\chld\ 2.\nil} C_1) \\
+         =&\ \lambda C_1 . (\lambda C_2 . (\lambda C_3 . C_3)(up\ C_2.1, C_2.2)) (\encode{\chld\ 2.\nil} C_1) \\
+         \betar&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\encode{\chld\ 2.\nil} C_1) \\
+         =&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . \encode{\nil} (\encode{\chld\ 2} C_3.1, C_3.2)C_1) \\
+         =&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . (\lambda C_4.C_4) (\encode{\chld\ 2} C_3.1, C_3.2)C_1) \\
+         \betar&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . (\encode{\chld\ 2} C_3.1, C_3.2)C_1) \\
+         =&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . right (\encode{\chld\ 1} (C_3.1, C_3.2))C_1) \\
          =&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . right (down (C_3.1, C_3.2))C_1) \\
     \end{align*}
     \end{small}
@@ -1416,7 +1416,7 @@ Elm.customType "Q"
             ]
 \end{lstlisting}
 
-  This declaration, if passed to Elm CodeGen's \texttt{File} function, would generate a file with following contents:
+  This declaration, if passed to Elm CodeGen's \texttt{File} function, would generate a file with the following content:
   \begin{lstlisting}[language=elm]
 type Q
     = Select Id Id Clause
