@@ -1131,23 +1131,25 @@ $\square o$ consists of either applying $\Diamond o$ on all the children of the 
     We are now able to give an example of how to encode editor
     expressions. Consider
     \begin{equation*}
-        \text{child\ $2$.nil $\ggg$ parent.nil}
+       \chld 2.\nil \ggg \parnt .\nil
     \end{equation*}
     using the encoding rules seen on \cref{fig:edt_enc} and
     \cref{fig:atc_enc}. For readability purposes we omit explicit
     typings;  any variable $C_i$ has type $Ctx$.
     \begin{small}
     \begin{align*}
-         &\ \encode{\text{child\ $2$.nil $\ggg$ parent.nil}} \\
-         =&\ \lambda C_1 . \encode{\text{parent.nil}} (\encode{\text{child\ $2$.nil}} C_1) \\
-         =&\ \lambda C_1 . (\lambda C_2 . \encode{\nil }(\encode{\parnt} C_2.1, C_2.2)) (\encode{\text{child\ $2$.nil}} C_1) \\
-         =&\ \lambda C_1 . (\lambda C_2 . \encode{nil}(up\ C_2.1, C_2.2)) (\encode{child\ 2.nil} C_1) \\
-         =&\ \lambda C_1 . (\lambda C_2 . (\lambda C_3 . C_3)(up\ C_2.1, C_2.2)) (\encode{child\ 2.nil} C_1) \\
-         \betar&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\encode{child\ 2.nil} C_1) \\
-         =&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . \encode{nil} (\encode{child\ 2} C_3.1, C_3.2)C_1) \\
-         =&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . (\lambda C_4.C_4) (\encode{child\ 2} C_3.1, C_3.2)C_1) \\
-         \betar&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . (\encode{child\ 2} C_3.1, C_3.2)C_1) \\
-         =&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . right (\encode{child\ 1} (C_3.1, C_3.2))C_1) \\
+         &\ \encode{\text{child\ $2$. \nil  $\ggg$ parent. \nil }} \\
+         =&\ \lambda C_1 . \encode{\text{parent. \nil }} (\encode{\text{child\ $2$. \nil }} C_1) \\
+         =&\ \lambda C_1 . (\lambda C_2 . \encode{\nil }(\encode{\parnt} C_2.1, C_2.2)) (\encode{\text{child\ $2$. \nil }} C_1) \\
+         =&\ \lambda C_1 . (\lambda C_2 . \encode{\nil}(up\ C_2.1,
+            C_2.2)) (\encode{\chld  2. \nil} C_1) \\
+         =&\ \lambda C_1 . (\lambda C_2 . (\lambda C_3 . C_3)(up\ C_2.1, C_2.2)) (\encode{\chld  2. \nil } C_1) \\
+         \betar&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\encode{\chld  2. \nil } C_1) \\
+         =&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda
+            C_3 . \encode{ \nil} (\encode{\chld  2} C_3.1, C_3.2)C_1) \\
+         =&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . (\lambda C_4.C_4) (\encode{\chld  2} C_3.1, C_3.2)C_1) \\
+         \betar&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . (\encode{\chld  2} C_3.1, C_3.2)C_1) \\
+         =&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . right (\encode{\chld  1} (C_3.1, C_3.2))C_1) \\
          =&\ \lambda C_1 . (\lambda C_2 . (up\ C_2.1, C_2.2)) (\lambda C_3 . right (down (C_3.1, C_3.2))C_1) \\
     \end{align*}
     \end{small}
