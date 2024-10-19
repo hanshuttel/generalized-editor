@@ -243,7 +243,7 @@ will produce a well-formed program.
 
 However, existing editor calculi do not account for context-sensitive
 aspects of program syntax, and notably not the binding
-mechanisms that are prominent in higher-order abstract syntax.
+mechanisms that are prominent in abstract syntax.
 
 Moreover, the work on editor calculi has so far been dependent on the
 syntax of the programming language that the editor must
@@ -267,8 +267,7 @@ pattern matching and fixed-points. These fragments are all known to
 have type systems with strong safety guarantees, and in this way we
 obtain a general result on type safety that applies to any instance of
 our generalized editor calculus. Finally, given the encoding, we show
-how the generalized editor calculus can be implemented in a modern
-functional language and we provide an example in the form of an editor 
+how the generalized editor calculus can be implemented in the functional language Elm and we provide an example in the form of an editor 
 instance.
 
 \section{A Generalized Editor Calculus}\label{sec:general_editor}
@@ -1418,7 +1417,7 @@ Elm.customType "Q"
             ]
 \end{lstlisting}
 
-  This declaration, if passed to Elm CodeGen's \texttt{File} function, would generate a file with following contents:
+  This declaration, if passed to Elm CodeGen's \texttt{File} function, would generate a file with the following contents:
   \begin{lstlisting}[language=elm]
 type Q
     = Select Id Id Clause
@@ -1654,18 +1653,18 @@ in the substitute being the only element under the updated cursor.
 
 \end{example}
 
-\subsubsection{Conditional expressions, Sequence, Recursion and Context}
+% \subsubsection{Conditional expressions, Sequence, Recursion and Context}
 
-Conditional expressions provide a way to perform different operations based on
-modal logic of the encapsulated \abt, such as the $@o$ operator which holds
-if the cursor is encapsulating the operator $o$. This is defined as \texttt{At-op}
-along \texttt{Necessity}, \texttt{Possibly-i} and \texttt{Possibly-i} operators
-in the editor calculus (\cref{fig:satisfaction_relation_modal}). Conditionals
-can be connected with logical operators, forming the operators \texttt{Negation},
-\texttt{Conjunction}, \texttt{Disjunction-1} and \texttt{Disjunction-2}
-(\cref{fig:satisfaction_relation_connectives}).
+% Conditional expressions provide a way to perform different operations based on
+% modal logic of the encapsulated \abt, such as the $@o$ operator which holds
+% if the cursor is encapsulating the operator $o$. This is defined as \texttt{At-op}
+% along \texttt{Necessity}, \texttt{Possibly-i} and \texttt{Possibly-i} operators
+% in the editor calculus (\cref{fig:satisfaction_relation_modal}). Conditionals
+% can be connected with logical operators, forming the operators \texttt{Negation},
+% \texttt{Conjunction}, \texttt{Disjunction-1} and \texttt{Disjunction-2}
+% (\cref{fig:satisfaction_relation_connectives}).
 
-With the current state of the implementation, it is only possible to query for a given conditional expression $\phi$, which will return wether that condtion holds. The rest is yet to be implemented.
+% With the current state of the implementation, it is only possible to query for a given conditional expression $\phi$, which will return wether that condtion holds. The rest is yet to be implemented.
 
 \subsubsection{Generic implementation}
 Given the generic nature of the editor calculus, the implementation could
