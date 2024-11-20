@@ -1,0 +1,356 @@
+[Du får ikke ofte mails fra noreply-pepm25@hotcrp.com. Få mere at vide om, hvorfor dette er vigtigt, på https://aka.ms/LearnAboutSenderIdentification ]
+
+Dear Hans,
+
+We are pleased to inform you that you submission
+
+* Title: A type safe calculus for generating syntax-directed editors
+* Site: https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fpepm25.hotcrp.com%2Fpaper%2F22&data=05%7C02%7Chans.huttel%40di.ku.dk%7C5d536ce3764a4e35685208dd085330c6%7Ca3927f91cda14696af898c9f1ceffa91%7C0%7C0%7C638675875578084107%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=9cF6MbLxcdQ6GB5j0Nu%2Fzw2Vpc47n8RXQRXwMlmyFpI%3D&reserved=0
+
+has been accepted for inclusion in the PEPM 2025 program.  Each
+submission was reviewed by at least three members of the Program
+Committee (PC), and was then discussed among the reviewers and
+additional PC members to resolve differences and correct
+misunderstandings before a decision was made.
+
+When preparing your paper for publication, please take care to address
+any comments made by the reviewers.  The final version is due Dec 4.
+
+For regular research paper submissions, you will be contacted by ACM for
+publication in the ACM proceedings.
+
+For short paper submissions, your paper will be published on the PEPM
+website; please update on hotcrp.
+
+A special note:
+
+ACM publication asks the authors of all accepted papers to enter their
+institutional e-mail addresses in HotCRP (not gmail.com, etc.). In order
+to apply the institutional open access for the paper, ACM checks the
+affiliation and the institutional e-mail address of the corresponding
+author.
+
+Attending:
+
+At least one author of each paper must attend the workshop to present
+the work.  The early registration deadline is December 20.
+https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fpopl25.sigplan.org%2Fattending%2Fregistration&data=05%7C02%7Chans.huttel%40di.ku.dk%7C5d536ce3764a4e35685208dd085330c6%7Ca3927f91cda14696af898c9f1ceffa91%7C0%7C0%7C638675875578084107%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=J1JYYSSHxPv3MNmnqf2j7JbDST3zeXYdKPN9d1j6LD4%3D&reserved=0
+
+Thank you for your submission and we look forward to welcome you in
+Denver.
+
+Best Regards,
+Annie and Guillaume
+
+Review #22A
+===========================================================================
+
+Overall merit
+-------------
+2. Weak reject
+
+Reviewer expertise
+------------------
+2. Some familiarity
+
+Paper summary
+-------------
+This paper presents an editor calculus that is a generalization
+of their previous work [5].
+As with [5], the editor calculus is type-safe, which is
+guaranteed by the existence of an encoding into the simply typed
+lambda calculus.
+As an improvement from [5], the editor calculus is
+language-agnostic, in that it can specify an editor for any
+language given its abstract syntax.
+The paper also describes an implementation of the editor calculus
+in Elm, showing how it can specify the syntax of SQL and how
+various edit operations are performed.
+
+Comments for authors
+--------------------
+This work is a nice continuation of the previous work presented
+at PEPM 2021.
+However, I could not have a good understanding of the authors'
+approach after reading the paper.
+In particular, I found Section 5 hard to follow, mainly because
+there is no overview of how the individual components of the
+implementation are connected.
+
+I would also like to see more clearly which parts of the
+formalization in Section 2 are the same as the previous work
+(i.e., [5]).  The authors explain in several places the
+differences between the two calculi, but I am not sure if it
+means the rest is identical to [5].
+
+To summarize, I think this is interesting work, but I encourage
+the authors to make the paper easier to read.
+
+## Line-by-line comments
+
+- L98: What does the last "that" refer to?
+
+- L104: Godiksen et al and [5] -> Godiksen et al. [5]
+
+- L111: I think the paragraph is slightly imprecise.  First, if
+"this approach" refers to the use of the lambda calculus, it
+does not automatically mean that the editor calculus is typed.
+Second, if soundness means "well-typed programs do not go wrong",
+the property should be stated as "the produced program does not
+go wrong".
+
+- L116: It is not easy to see what the authors mean by
+"context-sensitive aspects of program syntax" without reading
+the rest of the paper.  Could you elaborate a bit in this
+paragraph?
+
+- L133: I was interested to see how the authors apply the ideas
+of higher-order abstract syntax, but I could not find any
+explanation in the paper.
+
+- L250: Where can I find the full version of the paper?
+
+- L268: Is it true that a tree can be interpreted in *at most*
+two ways?
+
+- L278: 2 -> two (for consistency)
+
+- L282: The authors could be more explicit about what the
+transition systems are, e.g., by starting the section with a
+sentence like "We define the semantics of the editor calculus
+via transition systems".
+
+- L463: ast -> AST
+
+- L517, 529, 537, 538: seen on -> seen in
+
+- L724: I wonder whether a more detailed proof is available
+somewhere.
+
+- L734: induction in -> induction on
+
+- L747: I would like to see an overview of the implementation
+at the beginning of Section 5.  It would be difficult for a
+reader to figure out the overall approach from what is
+written in the subsections.
+
+- L751: As I am not familiar with Elm, I could not see what
+"interactive interfaces" means.
+
+- L757: I guess "programming languages" here refers to
+general-purpose programming languages.
+
+- L763: The authors state that the specification language is
+"chosen".  Does that mean the authors use an existing
+specification language?
+
+- L792, 980: The sentences lack a period at the end.
+
+- L833: What do the authors mean by "generic model"?
+
+- L842: From the context, I presume that the authors intend
+to illustrate the problems with automatic generation of
+source code using Example 5.2.  However, I failed to see
+the point of this example.
+
+- L890: Is Listing 1 an example of a generic model?
+
+- L891: Does the paragraph describe the authors' approach?
+
+- L1043: details -> detail
+
+- L1311: What does it mean for the encoding to be complete?
+
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+
+Review #22B
+===========================================================================
+
+Overall merit
+-------------
+4. Accept
+
+Reviewer expertise
+------------------
+2. Some familiarity
+
+Paper summary
+-------------
+The authors present a calculus for syntax-directed editors, parameterized by
+an arbitrary language syntax. Editor capabilities are represented by equipping
+the original grammar with sorted holes (representing a missing subterm) and
+cursors. Manipulations include replacing the hole under the current cursor with
+a well-formed syntax tree (which may itself include holes) or moving the cursor.
+Next, they demonstrate how the editor calculus can be encoded in a minimal
+lambda calculus and present associated soundness results. Finally, the authors
+present a realized editor-generator implemented in Elm, and describe its
+behavior when generating an editor for SQL.
+
+Comments for authors
+--------------------
+## Strengths
+
+- The core semantics for edit expressions presented in Section 2 are
+well-presented and cover all the basic generic operations on syntax that
+one would expect for basic edit capabilities.
+
+- Section 5, which describes the implementation, is compelling and provides a
+useful real-world use case.
+
+## Weaknesses
+
+- The embedding of abstract binding trees into a smaller LC seems to be a very
+straightforward Church encoding. Why not equip the LC with (labeled) sums
+directly, especially as you already need pattern matching?
+
+- Corollary 4.2 claims "type-safety" for the editor calculus, but the actual
+statement of such is quite weak, as the editor calculus doesn't appear to be
+typed to begin with. The well-formedness conditions for the editor calculus
+are under-specified in general.
+
+- The paper could use some more signposting. Section 3 in particular jumps right
+into a discussion of what features a minimal lambda calculus needs to encode
+binding trees with no lead-up.
+
+## Other Comments
+
+- The first half of the paper makes heavy reference to [5], to the point of
+obscuring this paper's unique contributions. For example, section 2.4 serves
+no purpose other than to introduce a result from [5], with no exposition as
+to why it still applies or is still relevant to their generalization.
+
+- It could be made clear earlier on that an editor expression `E` describes the
+"script" of actions applied to a binding tree. I was confused as to where the
+actual structure of the grammar was relevant until section 2.3 mentioned that
+the transition relation involves a separate abt `a`.
+
+- Presentation-wise, I think more attention could be given to the proof of the
+soundness theorem in Section 4, and less given to the technical encoding
+details in Section 3.
+
+- It should be made more clear that Theorem 3.1 is a theorem about the
+metalanguage, rather than the editor calculus.
+
+- The paper includes significant amounts of exposition in floating figures and
+examples that interrupt regular paragraph flow and make the text difficult to
+follow (example: The four lines beginning on line 862 initially appear to be
+a continuation of the paragraph beginning on line 840, but actually is
+attached to Example 5.2 on line 847).
+
+## Nitpicks/Typos
+
+- Line 257: "Guarantied"
+- The four-column figure in example 5.1 is difficult to read, especially the
+arity of `query`.
+
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+
+Review #22C
+===========================================================================
+
+Overall merit
+-------------
+4. Accept
+
+Reviewer expertise
+------------------
+2. Some familiarity
+
+Paper summary
+-------------
+The submission defines a approach to editor calculi that can be used to build a language-specific editor by instantiating a generic framework.  It focuses on the formal development, with a specification of the generic calculus, reduction rules for editor operations like cursor movement and substitution, an encoding into STLC, and some metatheoretical results.  There are several examples, including a simple language of expressions, and a larger fragment of SQL, and a discussion of practical concerns, mostly connected with an implementation in Elm.
+
+Comments for authors
+--------------------
+Overall, I think this submission would make for an interesting presentation at PEPM, particularly if the authors can demonstrate the implementation as well as presenting the technical details.
+
+Some positive aspects:
++ It's about program manipiulation in a very direct sense, and firmly in scope for PEPM.
++ It makes use of a lot of standard PL machinery: ideas from higher-order abstract syntax, modal logic, zippers, a labelled transition semantics, etc.  The technical details of the paper mostly feel like familiar territory for the PEPM audience, even if the domain is less familiar.
++ There's an interesting (if fairly brief) overview of some related work
++ The approach seems sufficiently flexible to support a variety of fairly dissimilar langauges (e.g. C, LaTeX, SQL, though only SQL is covered in the submission)
+
+Some aspects that I was less convinced about:
+- The bigger picture (e.g. the extent to which these kind of editor calculi are practically usable) is less clear to me.
+- As a reader who's not very familiar with editor calculi,  I'd have appreciated some more motivating examples early on.  I liked the simple language, but I'd have liked to see (e.g.) a little more motivation for the editor calculus: for example, is there a good reason to think that the particular operations it supports are adequate in practice?
+- The paper focuses on soundness, but as a user who wants to edit programs, I'm more concerned about expressiveness ("completeness") than correctness ("soundness").  In other words, I'd like to know that the calculus/editor can be used to write the programs I want to write more than I'd like to know that it always produces correct programs, particularly since the correctness it guarantees is just about syntax, not (e.g.) types.
+
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+
+Review #22D
+===========================================================================
+
+Overall merit
+-------------
+4. Accept
+
+Reviewer expertise
+------------------
+2. Some familiarity
+
+Paper summary
+-------------
+The authors present a calculus for syntax-directed editors, parameterized by an arbitrary language syntax. Editor capabilities are represented by equipping the original grammar with sorted holes (representing a missing subterm) and cursors. Manipulations include replacing the hole under the current cursor with a well-formed syntax tree (which may itself include holes) or moving the cursor. Next, they demonstrate how the editor calculus can be encoded in a minimal lambda calculus and present associated soundness results. Finally, the authors present a realized editor-generator implemented in Elm, and describe its behavior when generating an editor for SQL.
+
+Comments for authors
+--------------------
+## Strengths
+
+- The core semantics for edit expressions presented in Section 2 are
+well-presented and cover all the basic generic operations on syntax that
+one would expect for basic edit capabilities.
+
+- Section 5, which describes the implementation, is compelling and provides a
+useful real-world use case.
+
+## Weaknesses
+
+- The embedding of abstract binding trees into a smaller LC seems to be a very
+straightforward Church encoding. Why not equip the LC with (labeled) sums
+directly, especially as you already need pattern matching?
+
+- Corollary 4.2 claims "type-safety" for the editor calculus, but the actual
+statement of such is quite weak, as the editor calculus doesn't appear to be
+typed to begin with. The well-formedness conditions for the editor calculus
+are under-specified in general.
+
+- The paper could use some more signposting. Section 3 in particular jumps right
+into a discussion of what features a minimal lambda calculus needs to encode
+binding trees with no lead-up.
+
+## Other Comments
+
+- The first half of the paper makes heavy reference to [5], to the point of
+obscuring this paper's unique contributions. For example, section 2.4 serves
+no purpose other than to introduce a result from [5], with no exposition as
+to why it still applies or is still relevant to their generalization.
+
+- It could be made clear earlier on that an editor expression `E` describes the
+"script" of actions applied to a binding tree. I was confused as to where the
+actual structure of the grammar was relevant until section 2.3 mentioned that
+the transition relation involves a separate abt `a`.
+
+- Presentation-wise, I think more attention could be given to the proof of the
+soundness theorem in Section 4, and less given to the technical encoding
+details in Section 3.
+
+- It should be made more clear that Theorem 3.1 is a theorem about the
+metalanguage, rather than the editor calculus.
+
+- The paper includes significant amounts of exposition in floating figures and
+examples that interrupt regular paragraph flow and make the text difficult to
+follow (example: The four lines beginning on line 862 initially appear to be
+a continuation of the paragraph beginning on line 840, but actually is
+attached to Example 5.2 on line 847).
+
+## Nitpicks/Typos
+
+- Line 257: "Guarantied"
+- The four-column figure in example 5.1 is difficult to read, especially the
+arity of `query`.

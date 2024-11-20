@@ -222,13 +222,13 @@ notations for syntax-directed editors. In
 \cite{10.1145/3544548.3580785}, Beckmann et al. describe the
 Sandblocks system that lets users automatically generate a
 syntax-directed editor, given a description of the syntax of a given
-language. The focus here is on that of usability of editors of this
-kind.
+language. The focus in these papers is on the usability of editors of
+this kind.
 
 Other recent developments introduce models of computation that
 describe the workflow of syntax-directed editors and the correctness
 properties that they must satisfy. The Hazelnut framework by Omar et
-al. \cite{hazelnut} and the work by Godiksen et al. and
+al. \cite{hazelnut} and the work by Godiksen et al. 
 \cite{type_safe_structure_editor} introduce editor calculi that
 describe the syntax and operational semantics of editing commands,
 including how such commands can be combined. This line of work has
@@ -236,14 +236,14 @@ been tailored specifically towards functional programming: The edit
 operations manipulate abstract syntax trees from an applied
 $\lambda$-calculus.
 
-A major advantage of this approach is that it is typed and that type
-systems can be proven to be sound: The type system of the editor calculus
-will then guarantee that if an editor term $E$ is well-typed, then $E$
+A major advantage of the approaches just mentioned is that they
+involve provably sound type systems which guarantee that well-typed
+editor scripts are safe: If an editor term $E$ is well-typed, then $E$
 will produce a well-formed program.
 
 However, existing editor calculi do not account for context-sensitive
-aspects of program syntax, and notably not the binding
-mechanisms that are prominent in higher-order abstract syntax.
+aspects of program syntax, and in the particular those related to
+binding mechanisms.
 
 Moreover, the work on editor calculi has so far been dependent on the
 syntax of the programming language that the editor must
@@ -392,9 +392,26 @@ therefore cannot be defined in a generalized manner.
 \end{example}
 
 \subsubsection{Cursor contexts}
-In editor expressions, we frequently refer to performing actions on, or with, the \abt that is currently encapsulated by the cursor. To support this notion we introduce cursor contexts $C$, inspired by the zipper data structure by \cite{huet_zipper}, as a way to locate the cursor in an \abt. Central to this idea is the cursor context $\ctxhole$, or context hole, which specifies the subtree within which the cursor must reside, either as the root, or one of the first children.  For the full definition of cursor contexts, we refer to the full version of the paper, or to \cite{type_safe_structure_editor}, as they have a very similar construct.
+In editor expressions, we frequently refer to performing actions on,
+or with, the \abt that is currently encapsulated by the cursor. To
+support this notion we introduce cursor contexts $C$, inspired by the
+zipper data structure by \cite{huet_zipper}, as a way to locate the
+cursor in an \abt. Central to this idea is the cursor context
+$\ctxhole$, or context hole, which specifies the subtree within which
+the cursor must reside, either as the root, or one of the first
+children.  For the full definition of cursor contexts, we refer to the
+full version of the paper, or to \cite{type_safe_structure_editor}, as
+they have a very similar construct. 
 
-Although a cursor context accurately specifies the subtree where the cursor must reside, it does not inherently guarantee the presence of only one cursor within that subtree. Therefore, it becomes necessary to introduce the concept of well-formed $\abt$s. Informally, a well-formed \abt is simply an \abt containing exactly one cursor. This is guarantied when an \abt can be interpreted as $C[\dot{a}]$, meaning the context C, where $\ctxhole$ is substituted with a tree $\dot{a}$, where the cursor-operator is either the root $\dot{a}$, or one of the children of the root. For example the statement
+Although a cursor context accurately specifies the subtree where the
+cursor must reside, it does not inherently guarantee the presence of
+only one cursor within that subtree. Therefore, it becomes necessary
+to introduce the concept of well-formed $\abt$s. Informally, a
+well-formed \abt is simply an \abt containing exactly one cursor. This
+is guarantied when an \abt can be interpreted as $C[\dot{a}]$, meaning
+the context C, where $\ctxhole$ is substituted with a tree $\dot{a}$,
+where the cursor-operator is either the root $\dot{a}$, or one of the
+children of the root. For example the statement 
     \begin{equation*}
         \text{let $x=[\hole{e}]$ in $x+5$}
     \end{equation*}
@@ -403,16 +420,19 @@ Although a cursor context accurately specifies the subtree where the cursor must
         C &= \text{let $x=\ctxhole$ in $x+5$} \\
         \dot{e}&= [\hole{e}]
     \end{align*}
-
-
-It should be noted that there often are two valid interpretations of a tree $a$, as $C[\dot{a}]$. In this example, the other valid interpretation would be:
-
+%
+It should be noted that there often are two valid interpretations of a
+tree $a$, as $C[\dot{a}]$. In this example, the other valid
+interpretation would be: 
+%
 \begin{align*}
         C' &= \ctxhole \\
         \dot{e}' &= \text{let $x=[\hole{e}]$ in $x+5$}
 \end{align*}
 
-It depends on the editor expression being evaluated which of the two possible interpretations is usable, and in the implementation it is shown how to find the right of the 2 possible interpretations.
+It depends on the editor expression being evaluated which of the two
+possible interpretations is usable, and in the implementation it is
+shown how to find the right of the two possible interpretations.
 
 
 \subsection{Semantics}
