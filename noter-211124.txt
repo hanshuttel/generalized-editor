@@ -1,1 +1,5 @@
 Kan vi (skal vi?) give et bedre overblik over implementationen?
+
+Soundness eller safety?
+
+Hvad kan vi gøre ved eksempel 5.1? 

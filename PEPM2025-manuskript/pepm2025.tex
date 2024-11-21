@@ -784,17 +784,17 @@ where $\tau_s$ is a type for each sort $s \in \mathcal{S}$ and $\tau
 respectively, and $\Gamma$ is a type environment
  $\Gamma : \Var \pra \Types$.
 
- The type systems all satisfy the subject
- reduction property.
+ The typed lambda calculi that we consider all satisfy the same
+ subject reduction property.
 
  \begin{theorem}[Subject reduction]\label{thm:subred}
    If $\Gamma \vdash e : \tau$ and $e \to e'$, then $\Gamma \vdash e'
    : \tau$.
  \end{theorem}
 
- It is this result that ensures that our encoding will indeed provide
- a general result about type soundness for the generalized editor
- calculus.
+ It is this result about the chosen metalanguage that ensures that our
+ encoding will indeed provide a general result about type soundness
+ for the generalized editor calculus.
 
 \subsection{Abstract binding trees}
 
