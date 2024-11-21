@@ -345,8 +345,9 @@ construct of local declarations.
 \end{example}
 
 \subsection{The editor calculus}
-The formation rules for editor expressions $E \in \Edt$, where $\Edt$ is the sort of editor
-expressions, are given below.
+An expression $E \in \Edt$ in the editor calculus describes a script
+of actions that are to be applied to an \abt. The formation rules for
+editor expressions are given below.
 %
 \begin{align*}
   E & ::= & \pi.E  \mid  \phi => E_1|E_2  \mid  E_1 \ggg E_2  \mid  \rec  \ x.E  \mid  x  \mid  \nil  \\
@@ -354,22 +355,22 @@ expressions, are given below.
     \phi & ::= & \neg\phi  \mid  \phi_1 \wedge \phi_2  \mid  \phi_1 \vee \phi_2  \mid  @o  \mid  \Diamond o  \mid  \square o
 \end{align*}
 %
-Expressions describe the possible edit actions. Edit expressions can
-be built using prefixed expressions of the form $\pi.E$, a notion
-inspired by the $\pi$-calculus \cite{picalculus}. This
-evaluates $\pi$ before continuing with $E$. A prefix allows for
-navigation downwards in an \abt ($\chld \ n$) and upwards ($\parnt$)
-and for inserting an operator $\{ o \}$. The conditional expression
-$\phi => E_1|E_2$ reduces to $E_1$ if $\phi$ is satisfied and $E_2$
-otherwise. Conditions $\phi$ are interpreted relative to the position
-of the cursor. Conditions are expressed using a spatial logic
-\cite{CAIRES2003194} that allows us to require that an operator $o$ is
-present ($@o$) and are built using propositional connectives, the
-"somewhere below'' modality $\Diamond$ and the "everywhere below''
-modality $\square$. The sequential expression $E_1 \ggg E_2$ evaluates
-$E_2$ only once $E_1$ has been reduced to $nil$. The recursive
-expression $rec \ x.E$ binds the recursion variable $x$ in $E$, which
-can then be used to recursively iterate an expression.
+Atomic actions $\pi$ are introduced with \emph{prefix expressions}
+$\pi.E$, a notion inspired by the $\pi$-calculus
+\cite{picalculus}. This evaluates $\pi$ before continuing with $E$. A
+prefix allows for navigation downwards in an \abt ($\chld \ n$) and
+upwards ($\parnt$) and for inserting an operator $\{ o \}$. A
+\emph{conditional expression} $\phi => E_1|E_2$ reduces to $E_1$ if
+$\phi$ is satisfied and $E_2$ otherwise. Conditions $\phi$ are
+interpreted relative to the position of the cursor and expressed using
+a spatial logic \cite{CAIRES2003194}. This logic uses a "here''
+modality $@o$ that describes that an operator $o$ is present at the
+cursor, a "somewhere below'' modality $\Diamond$ and an "everywhere
+below'' modality $\square$. \emph{Sequential composition}
+$E_1 \ggg E_2$ evaluates $E_2$ when $E_1$ has been reduced to
+$nil$. The recursive expression $rec \ x.E$ binds the recursion
+variable $x$ in $E$; occurrences of $x$ in $E$ represent recursive
+calls.
 
 The original editor calculus \cite{type_safe_structure_editor}
 introduces an \textsf{eval} construct that allows the edit action to
@@ -408,7 +409,7 @@ cursor must reside, it does not inherently guarantee the presence of
 only one cursor within that subtree. Therefore, it becomes necessary
 to introduce the concept of well-formed $\abt$s. Informally, a
 well-formed \abt is simply an \abt containing exactly one cursor. This
-is guarantied when an \abt can be interpreted as $C[\dot{a}]$, meaning
+is guaranteed when an \abt can be interpreted as $C[\dot{a}]$, meaning
 the context C, where $\ctxhole$ is substituted with a tree $\dot{a}$,
 where the cursor-operator is either the root $\dot{a}$, or one of the
 children of the root. For example the statement 
@@ -690,19 +691,21 @@ $\square o$ holds for $a$ when $o$ is found in every subtree of the
 
 \subsection{Guarantees from the original editor calculus}
 
-The original editor calculus of \cite{type_safe_structure_editor} is
-equipped with a type system that types configurations relative to a
-path in the \ast of the configuration; this path represents the
-position of the cursor. Judgments are therefore of the form
-$p, \Gamma_e \vdash \lr{E,a} : \textsf{ok}$, where $p$ is a path in
-the ast $a$ and $\Gamma_e$ is a type environment.
+The type system of the original calculus
+\cite{type_safe_structure_editor} wguarantees that \emph{well-typed
+  editor scripts cannot go wrong}: A well-typed configuration remains
+well-typed after a transition and that a well-typed configuration will
+not get stuck.
 
-The type system of the original calculus guarantees that a well-typed
-configuration remains well-typed after a transition and that a
-well-typed configuration will not get stuck. Here,
-$(p,\Gamma_e)\downarrow_\alpha$ denotes that the path and the type
-environment are updated because of the action $\alpha$. These
-guarantees can be expressed as the following theorem.
+The original type system types configurations relative to a
+path in the abstract syntax tree of the configuration; this path
+represents the position of the cursor. Judgments are therefore of the
+form $p, \Gamma_e \vdash \lr{E,a} : \textsf{ok}$, where $p$ is a path
+in the tree $a$ and $\Gamma_e$ is a type environment.
+
+Here, $(p,\Gamma_e)\downarrow_\alpha$ denotes that the path and the
+type environment are updated because of the action $\alpha$. The type
+safety theorem is as follows.
 
 \begin{theorem}[\cite{type_safe_structure_editor}]\label{thm:typesafe}
   If $p, \Gamma_e \vdash \lr{E,a} : \textsf{ok}$ then
@@ -714,17 +717,27 @@ guarantees can be expressed as the following theorem.
   \end{enumerate}
 \end{theorem}
 
+Thanks to our general encoding into a typed lambda calculus, we can
+now obtain a similar guarantee for \emph{any} language. We return to
+this in \cref{sec:sound}.
+
 \section{Encoding the generalized editor calculus} \label{sec:encoding}
 
+We now describe how one can represent the generalized editor calculus
+and abstract binding trees in a typed lambda calculus.
 
 \subsection{A collection of lambda calculi}
 
-To encode the abstract binding trees, the simply typed lambda calculus
-suffices, so for an \abt $a$ its encoding $\encode{a}$ is a term in
-$\stlc$.
+The features of the lambda calculus that we use for the encoding are
+determined by the expressive power of the editor calculus and of
+abstract binding trees.
+
+For encoding the abstract binding trees, the simply typed lambda
+calculus suffices, as we can embed binders using abstraction. So for
+an \abt $a$ its encoding $\encode{a}$ is a term in $\stlc$.
 
 In order to encode {\abt}s with cursors and expressions of the
-generalized editor calculus, we extend \stlc with more constructs.
+generalized editor calculus, we must extend \stlc with more constructs.
 
 To represent contexts, we introduce pairs. To encode atomic prefix
 commands we further extend the calculus with pattern matching
@@ -1187,13 +1200,13 @@ It is now straightforward to encode configurations as follows.
 Note that here $\encode{E} : T \times T_C \to T$ where $T$ is the type
 of the encoding of an \abt and $T_C$ is the type of the encoding of a context.
 
-\section{Soundness of the encoding}
+\section{Soundness of the encoding} \label{sec:sound}
 
 The main result about our encoding is that it is sound w.r.t the
 operational semantics of the original calculus.
 
-\begin{theorem}[Soundness] For every editor expression $E$ and \abt $a$
-  we have that if
+\begin{theorem}[Soundness] \label{thm:sound} For every editor
+  expression $E$ and \abt $a$ we have that if
   %
   \begin{equation} \lr{E,a} \ltrans{} \lr{E',a'} \label{eq:trans} \end{equation}
   then
@@ -1335,14 +1348,14 @@ From this specification language, it is possible to extract what is assumed by t
 \subsection{Code generation versus a generic model}
 
 An important design decision is that of whether the implementation
-should generate part of the source code of an editor instance or if a
+should generate specific source code for a given editor instance or if a
 generic model might suffice.
 
-Automatic generation of source code offers the benefit of directly representing
-provided operators, along with their arity and sort, within an algebraic data
-type (referred to as \texttt{type} in Elm and \texttt{data} in Haskell).
-This ensures that only well-formed terms can be represented using the algebraic
-data types.
+Automatic generation of source code offers the benefit of directly
+representing provided operators, along with their arity and sort,
+within an algebraic data type (referred to as \texttt{type} in Elm and
+\texttt{data} in Haskell).  This ensures that only well-formed terms
+can be represented using the algebraic data types.
 
 However, opting for this method might require automatic generation or
 updates to both the definitions and signatures of some functions.
@@ -1532,7 +1545,7 @@ into following sub-tasks:
         when generating the cursor context
 \end{itemize}
 
-The next section will explain in more details how the steps above can be done,
+The next section will explain in more detail how the steps above can be done,
 and how we always get a unique decomposition, as long as the \abt to be decomposed is well-formed.
 
 This way of decomposing an \abt always places the cursor at the root of the
