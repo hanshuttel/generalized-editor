@@ -1,5 +1,19 @@
-Kan vi (skal vi?) give et bedre overblik over implementationen?
+Kan vi (skal vi?) give et anderledes struktureret overblik over implementationen?
 
 Soundness eller safety?
 
-Hvad kan vi gøre ved eksempel 5.1? 
+Hvad kan vi gøre ved eksempel 5.1?
+
+Hvad kan vi gøre ved
+
+"The paper includes significant amounts of exposition in floating figures and
+  examples that interrupt regular paragraph flow and make the text difficult to
+  follow (example: The four lines beginning on line 862 initially appear to be
+  a continuation of the paragraph beginning on line 840, but actually is
+  attached to Example 5.2 on line 847)."
+
+??
+
+Sundhedsbeviset er der ikke meget om, men der er så lidt plads.
+
+En lang udgave?
