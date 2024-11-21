@@ -1220,8 +1220,9 @@ operational semantics of the original calculus.
   possible. Therefore, we first prove that the theorem holds for all
   axioms, as these rules does not need an inductive hypothesis.
 \end{proof}
-Because of Theorem \ref{thm:subred}, we now get that our encoding is
-type safe.
+Our encoding is type safe: If a configuration
+\lr{E,a} can evolve to \lr{E',a'}, then if the encoded configuration
+is well-typed, then so is the encoding of \lr{E',a'}.
 
 \begin{corollary}
   If $\Gamma \vdash \encode{\lr{E,C[a]}} : t$ then, if $\lr{E,a}
@@ -1318,7 +1319,7 @@ From this specification language, it is possible to extract what is assumed by t
   \\
   \[
     \begin{aligned}
-       & \text{Sort} &  & \text{Term}                     &   & \text{Arity}            &  & \text{Operator} \\
+       & \textsf{Sort} &  & \textsf{Term}                     &   & \textsf{Arity}            &  & \textsf{Operator} \\
        & query ::=   &  & \text{"SELECT " $id_1$}         &   & (id_1,id_2 &  & select          \\
         &             &  & \text{" FROM " $id_2$}         &   &  ,clause)query \\
         &             &  & \text{$clause$}                                                                       \\
