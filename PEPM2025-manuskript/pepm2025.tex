@@ -437,22 +437,23 @@ shown how to find the right of the two possible interpretations.
 
 \subsection{Semantics}
 
-In this section we present the transition systems and the general
-forms of transition rules defining these systems, based on the
-generalized syntax of the editor calculus previously presented.
+In this section we present the operational semantics of the editor
+calculus that we study. 
 
-\subsubsection{Editor Expressions} \label{sec:Semantics}
+\subsubsection{Editor expressions} \label{sec:Semantics}
 
-Transitions for editor expressions are of the form
-\[ \lr{E, a} \ltrans{\alpha} \lr{E', a'} \]
-where the editor expression
-$E \in \Edt$ is closed and the \abt $a \in \ABT{}$ is well-formed. The
-labels of the transitions, $\alpha$, are the atomic prefix commands
-$Apc$ and the silent transition $\epsilon$. The transition relation
-$\Rightarrow$ is defined by the rules shown in
-\cref{fig:editor_expression_rules}. These facilitate ways of composing
-editor expressions together with conditions, sequential composition
-and recursion.
+The semantics describe how en editor expression $E$
+can modify and traverse an abstract syntax tree $a$.
+
+Transitions for editor expressions$E$ are therefore small-step
+transitions of the form
+\[ \lr{E, a} \ltrans{\alpha} \lr{E', a'} \] where the editor
+expression $E \in \Edt$ is closed and the \abt $a \in \ABT{}$ is
+well-formed. The label $\alpha$ is either an atomic prefix command
+$\pi \in Apc$ or a silent transition $\epsilon$.
+
+We define the set of valid transitions by the rules shown in
+\cref{fig:editor_expression_rules}.
 
 \federeboks{c}{
     \infeshort{Cond-1}
@@ -479,22 +480,24 @@ and recursion.
         {a \ltrans{\pi} a'}
         {\lr{\pi.E, C[a]} \ltrans{\pi} \lr{E, C[a']}}
 }{\caption{Reduction rules for editor expressions}\label{fig:editor_expression_rules}}
+
 \subsubsection{Substitution and cursor movement}
 
-The labelled transition system for substitutions and cursor movement
-is defined as $(\ABT{}, Apc, \Rightarrow)$. This system describes the
-semantics of modifying the well-formed \abt $a$ encapsulated by the
-cursor, by either substituting it with an operator or moving the
-cursor up or down the tree. Transitions are therefore of the form $a
-\ltrans{\pi} a'$, where $a, a' \in \ABT{}$ and $\pi \in Apc$.
+Atomic prefixes $\pi$ describe the effect of a single edit action. This can
+either consist in modifying the well-formed \abt $a$ encapsulated by the
+cursor by substituting $a$ with an operator or in moving the
+cursor up or down the tree. Transitions are now of the form 
+%
+\[ a \ltrans{\pi} a' \]
+where $a, a' \in \ABT{}$ and $\pi \in Apc$.
 
-For substitution we define the transition rule for every label
-$\{o\} \in Apc$, which substitutes the \abt currently encapsulated by
+For substitution we define the transition rule for every operator label
+$\{o\} \in Apc$, which substitutes the \abt encapsulated by
 the cursor with an operator
 $o(\Vec{x_1}.\hole{{s_1}}; \dots ; \Vec{x_n}.\hole{{s_n}})$ in which
 the binders of the $i$'th argument of $o$ are $\Vec{x_i}$ and the sort
 of the $i$'th argument is $s_i$. The general case of this rule is
-shown in \cref{fig:substitution_rules}. The side-condition ensures
+shown in \cref{fig:substitution_rules}. The side condition ensures
 that we can only substitute operators of sort $s$ with {\abt}s of
 sort $s$.
 
@@ -689,7 +692,7 @@ $\square o$ holds for $a$ when $o$ is found in every subtree of the
 
 The original editor calculus of \cite{type_safe_structure_editor} is
 equipped with a type system that types configurations relative to a
-path in the ast of the configuration; this path represents the
+path in the \ast of the configuration; this path represents the
 position of the cursor. Judgments are therefore of the form
 $p, \Gamma_e \vdash \lr{E,a} : \textsf{ok}$, where $p$ is a path in
 the ast $a$ and $\Gamma_e$ is a type environment.
@@ -786,7 +789,7 @@ To encode abstract binding trees we only need to use the simply typed
 lambda-calculus where we have term constants $o$ for every $o \in \OP$
 excluding cursors, and the base types $s$ for every $s \in \SORT$.
 
-Typing rules for operators can be seen on \cref{fig:abt_typing_rules},
+Typing rules for operators can be seen in \cref{fig:abt_typing_rules},
 where we can infer the type of an operator in the lambda-calculus by
 its arity.
 \federeboks{C}{
@@ -801,7 +804,7 @@ its arity.
 With the operators added as term constants and sorts added as base
 types, encoding an {\abt} is straightforward as we just have to curry the
 operator $o$, encode the children $a_1, \dots, a_n$ and add
-typings. This can be seen on \cref{fig:enc_abt}.
+typings. This can be seen in \cref{fig:enc_abt}.
 
 \federeboks{C}{
     \encode{o(\Vec{x_1}.a_1, \dots , \Vec{x_n}.a_n)} = o \ (\lambda \Vec{x_1} : \Vec{s_1}.\encode{a_1}) \dots (\lambda \Vec{x_n} : \Vec{s_n}.\encode{a_n})
@@ -813,7 +816,7 @@ typings. This can be seen on \cref{fig:enc_abt}.
 \begin{example}\label{ex:enc_abt_example}
     We can now encode the operators in our small language. Following
     our singular rule for encoding $\abt$s we get the resulting encoding
-    seen on \cref{fig:enc_abt_example}, and the type for each operator
+    seen in \cref{fig:enc_abt_example}, and the type for each operator
     on \cref{fig:abt_example_type}.
 
     \federeboks{C C}{
@@ -1153,7 +1156,7 @@ $\square o$ consists of either applying $\Diamond o$ on all the children of the 
     \begin{equation*}
        \chld 2.\nil \ggg \parnt .\nil
     \end{equation*}
-    using the encoding rules seen on \cref{fig:edt_enc} and
+    using the encoding rules seen in \cref{fig:edt_enc} and
     \cref{fig:atc_enc}. For readability purposes we omit explicit
     typings;  any variable $C_i$ has type $Ctx$.
     \begin{small}
@@ -1252,8 +1255,9 @@ In \cite{sunemsc} we provide examples for subsets of C
 
 \subsubsection{The specification language}
 
-The specification language is chosen to expect some syntactic
-categories followed by concrete and abstract syntax given in BNF notation.
+We define a specification language that allows us to specify the
+abstract and concrete syntax for the language for which we want to
+instantiate the editor calculus.
 % Every operator from the abstract syntax is represented by one or
 % more non-terminals in the concrete syntax.
 
@@ -1270,18 +1274,26 @@ with a term, arity and operator name. The term might refer to other
 syntactic categories or its own. Each term is the concrete syntax of
 an operator, while the arity, in combination with the operator name,
 is a concise representation of the abstract syntax of an operator.
-The abstract syntax only makes use of the defined syntactic categories and, inspired by Harper\cite{harper_foundations}, binders can be specified in the arity description with a dot ('.'), e.g. $x.s$ specifies that variable $x$ is bound within the scope of $s$.
+The abstract syntax only makes use of the defined syntactic categories
+and, inspired by Harper\cite{harper_foundations}, binders can be
+specified in the arity description with a dot ('.'), e.g. $x.s$
+specifies that variable $x$ is bound within the scope of $s$.
 
-Meta-variables can be represented in the concrete syntax (term) with a percentage sign ('\%') followed by a string, e.g. '\%int' represents any integer. The operator
-names can also be supplied with type information, e.g. an operator named
-\texttt{num} can be followed by \texttt{[Int]}, resulting in \texttt{num[Int]}, to specify that it represents a number of type Int. This can later be used in source code generation to allow for passing concrete values of given type to the operator. But this only applies for operators of arity $()x$, where $x$ is any sort.
+Meta-variables can be represented in the concrete syntax (term) with a
+percentage sign ('\%') followed by a string, e.g. '\%int' represents
+any integer. The operator names can also be supplied with type
+information, e.g. an operator named \texttt{num} can be followed by
+\texttt{[Int]}, resulting in \texttt{num[Int]}, to specify that it
+represents a number of type Int. This can later be used in source code
+generation to allow for passing concrete values of given type to the
+operator. But this only applies for operators of arity $()x$, where
+$x$ is any sort.
 
 From this specification language, it is possible to extract what is assumed by the generalized editor calculus. The set of sorts $\mathcal{S}$ is the set of syntactic categories. For example, a syntactic category $e \in Exp$ can get parsed into a sort $s_{e}$.
 
 \begin{example}\label{ex:as-sql-lang}
-  Following is a specification of a subset of the PostgreSQL\cite{postgresql-about} language, per the specification language
-
-
+  We here show the specification of a subset of the PostgreSQL\cite{postgresql-about} language.
+%
   \[
     \begin{aligned}
        & \textit{q} \in \textit{Query}                                                       \\
