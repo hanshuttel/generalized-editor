@@ -1,4 +1,6 @@
-\documentclass[sigplan,review]{acmart}
+\documentclass[sigplan]{acmart}
+\usepackage{balance}
+\usepackage{microtype}
 \input{preamble}
 \newcommand{\abt}{\textsf{abt}\xspace}
 \newcommand{\ec}[1]{\ensuremath{\textsf{#1}}\xspace}
@@ -69,8 +71,8 @@
 %%
 %% The "title" command has an optional parameter,
 %% allowing the author to define a "short title" to be used in page headers.
-\title{A type safe calculus for generating
-  syntax-directed editors}
+\title{A Type Safe Calculus for Generating
+  Syntax-Directed Editors}
 
 %%
 %% The "author" command and its associated commands are used to define
@@ -276,7 +278,7 @@ instance.
 We first present a generalization of the syntax-directed editor
 calculus by \cite{type_safe_structure_editor}.
 
-\subsection{Representing abstract syntax, cursors and holes}
+\subsection{Representing Abstract Syntax, Cursors And Holes}
 
 Following Harper \cite{harper_foundations}, we assume that an abstract
 syntax is given by a set of \emph{sorts} $\SORT$, an arity-indexed
@@ -344,7 +346,7 @@ construct of local declarations.
     \end{equation*}
 \end{example}
 
-\subsection{The editor calculus}
+\subsection{The Editor Calculus}
 An expression $E \in \Edt$ in the editor calculus describes a script
 of actions that are to be applied to an \abt. The formation rules for
 editor expressions are given below.
@@ -392,7 +394,7 @@ therefore cannot be defined in a generalized manner.
     $\text{hole}_e$.
 \end{example}
 
-\subsubsection{Cursor contexts}
+\subsubsection{Cursor Contexts}
 In editor expressions, we frequently refer to performing actions on,
 or with, the \abt that is currently encapsulated by the cursor. To
 support this notion we introduce cursor contexts $C$, inspired by the
@@ -441,7 +443,7 @@ shown how to find the right of the two possible interpretations.
 In this section we present the operational semantics of the editor
 calculus that we study. 
 
-\subsubsection{Editor expressions} \label{sec:Semantics}
+\subsubsection{Editor Expressions} \label{sec:Semantics}
 
 The semantics describe how en editor expression $E$
 can modify and traverse an abstract syntax tree $a$.
@@ -482,7 +484,7 @@ We define the set of valid transitions by the rules shown in
         {\lr{\pi.E, C[a]} \ltrans{\pi} \lr{E, C[a']}}
 }{\caption{Reduction rules for editor expressions}\label{fig:editor_expression_rules}}
 
-\subsubsection{Substitution and cursor movement}
+\subsubsection{Substitution And Cursor Movement}
 
 Atomic prefixes $\pi$ describe the effect of a single edit action. This can
 either consist in modifying the well-formed \abt $a$ encapsulated by the
@@ -689,7 +691,7 @@ $\square o$ holds for $a$ when $o$ is found in every subtree of the
 %     }{\caption{Satisfaction relation for modal operators on $plus$}\label{fig:example_satisfaction_relation}}
 % \end{example}
 
-\subsection{Guarantees from the original editor calculus}
+\subsection{Guarantees From The Original Editor Calculus}
 
 The type system of the original calculus
 \cite{type_safe_structure_editor} wguarantees that \emph{well-typed
@@ -721,12 +723,12 @@ Thanks to our general encoding into a typed lambda calculus, we can
 now obtain a similar guarantee for \emph{any} language. We return to
 this in \cref{sec:sound}.
 
-\section{Encoding the generalized editor calculus} \label{sec:encoding}
+\section{Encoding the Generalized Editor Calculus} \label{sec:encoding}
 
 We now describe how one can represent the generalized editor calculus
 and abstract binding trees in a typed lambda calculus.
 
-\subsection{A collection of lambda calculi}
+\subsection{A Collection Of Lambda Calculi}
 
 The features of the lambda calculus that we use for the encoding are
 determined by the expressive power of the editor calculus and of
@@ -796,7 +798,7 @@ respectively, and $\Gamma$ is a type environment
  encoding will indeed provide a general result about type soundness
  for the generalized editor calculus.
 
-\subsection{Abstract binding trees}
+\subsection{Abstract Binding Trees}
 
 To encode abstract binding trees we only need to use the simply typed
 lambda-calculus where we have term constants $o$ for every $o \in \OP$
@@ -888,7 +890,7 @@ will be encoded as
 
 
 
-\subsection{Cursor contexts}\label{sec:enc_cursor_contexts}
+\subsection{Cursor Contexts}\label{sec:enc_cursor_contexts}
 
 To represent {\abt}s with cursor contexts we introduce the pair construct similarly to \cite{types_programming_languages}.
 %In \cref{fig:abt_cursor_syntactic_forms} we introduce the new syntactic forms which include the pair construct, first projection, second projection and the product type.
@@ -933,7 +935,7 @@ In \cref{fig:enc_abt_cursor} the encoding for cursor contexts can be seen. We ca
 
 %\end{example}
 
-\subsection{Atomic prefix commands}
+\subsection{Atomic Prefix Commands}
 
 To encode the atomic prefix commands we further extend the lambda
 calculus with pattern matching. The formation rules are extended as
@@ -1014,7 +1016,7 @@ recursively. \textit{parent} and \textit{insert} are simply encoded as \textit{u
   obtain \eqref{enc-pref-trans} given a transition \eqref{pref-trans}.
 \end{proof}
 
-\subsection{Control structures and modal logic}
+\subsection{Control Structures And Modal Logic}
 
 To encode control structures and modal logic, we must introduce
 recursion and the $Bool$ base type. The combination of a next-step
@@ -1191,7 +1193,7 @@ $\square o$ consists of either applying $\Diamond o$ on all the children of the 
     \end{small}
 \end{example}
 
-\subsection{Encoding configurations}
+\subsection{Encoding Configurations}
 
 It is now straightforward to encode configurations as follows.
 %
@@ -1200,7 +1202,7 @@ It is now straightforward to encode configurations as follows.
 Note that here $\encode{E} : T \times T_C \to T$ where $T$ is the type
 of the encoding of an \abt and $T_C$ is the type of the encoding of a context.
 
-\section{Soundness of the encoding} \label{sec:sound}
+\section{Soundness Of The Encoding} \label{sec:sound}
 
 The main result about our encoding is that it is sound w.r.t the
 operational semantics of the original calculus.
@@ -1235,7 +1237,7 @@ We now describe an implementation of a generic editor based on our
 encoding in the Elm language, as Elm supports a declarative
 implementation of interactive interfaces directly.
 
-\subsection{Example languages}
+\subsection{Example Languages}
 
 Since our implementation will propose a generic editor, it is crucial
 to provide a meaningful set of concrete examples, demonstrating that
@@ -1267,7 +1269,7 @@ In \cite{sunemsc} we provide examples for subsets of C
 % ideal for the implementation to provide other means of describing the
 % syntax of a language.
 
-\subsubsection{The specification language}
+\subsubsection{The Specification Language}
 
 We define a specification language that allows us to specify the
 abstract and concrete syntax for the language for which we want to
@@ -1346,7 +1348,7 @@ From this specification language, it is possible to extract what is assumed by t
   Notably, a binder is used in the $insert$ operator, where the alias of $id_1$, specified as $id_2$ is bound within the sub-query.
 \end{example}
 
-\subsection{Code generation versus a generic model}
+\subsection{Code Generation Versus A Generic Model}
 
 An important design decision is that of whether the implementation
 should generate specific source code for a given editor instance or if a
@@ -1412,7 +1414,7 @@ terms effectively. If given an ill-formed term, it is considered ill-typed by
 the editor, which poses an advantage over the generic solution requiring
 thorough checking to ensure that given terms are well-formed.
 
-\subsection{Generating source code}
+\subsection{Generating Source Code}
 Elm CodeGen\cite{elm-codegen-package} is an Elm package and
 CLI tool (command-line interface tool) to generate Elm source code.
 The tool is an alternative to the otherwise obvious (and arguably tedious)
@@ -1471,13 +1473,13 @@ type Q
 \end{lstlisting}
 \end{example}
 
-\subsection{Editor expressions}
+\subsection{Editor Expressions}
 
 Having generated all sorts and operators as algebraic data types in Elm,
 the next step is to implement functionality for manipulating the algebraic
 data types, representing $\abt$s in the editor.
 
-\subsubsection{Decomposing trees}
+\subsubsection{Decomposing Trees}
 
 All editor expressions assume a well-formed \abt, which is a tree
 with exactly one cursor, which cannot be guaranteed by the generated
@@ -1525,7 +1527,7 @@ example \cref{ex:as-sql-lang} (including cursor and hole operators) and
 their two possible decompositions in figure \cref{fig:sql-decomp-ex}.
 
 
-\begin{figure}[H]
+\begin{figure}%[H]
   \centering
   \includegraphics[width=\linewidth]{img/slq-decompose-ex.drawio.png}
   \caption{Two different decompositions of the same term}
@@ -1556,7 +1558,7 @@ has been revised to only generate an operator of arity $(\hat{s})\dot{s}$,
 representing that the cursor only encapsulates the root of a cursorless \abt
 of sort $\hat{s}$.
 
-\subsubsection{Cursor path}
+\subsubsection{Cursor Path}
 
 Generating a path to the cursor in the \abt of sort $s \in \mathcal{S}$ extended with
 hole and cursor operators simplifies the process of generating the cursor context. The path tells us
@@ -1571,7 +1573,7 @@ and arity-indexed family of operators $\mathcal{O}$ given by the abstract syntax
 of a language. The Elm CodeGen package\cite{elm-codegen-package} has is used to
 generate a \texttt{getCursorPath} function for a \texttt{Base} type, which returns a list of integers, indicating, form the root, which $i$ is taken for each operator $o(i_1,i_2,...,i_n) \in \mathcal{O}$ until the cursor is reached.
 
-\subsubsection{Cursor context}
+\subsubsection{Cursor Context}
 
 Having the cursor path, the cursor context can be generated by replacing every
 operator $o \in \mathcal{O}$ with its corresponding cursor context operator
@@ -1582,12 +1584,13 @@ cursor path is empty) and replace the operator reached with the
 context hole operator $[ \ \cdot \ ] \in C$. The rest of the tree which has not
 been traversed will be passed to the next step, building the well-formed tree.
 
-Functions supporting building cursor contexts are generated by Elm CodeGen, where a \texttt{toCCtx} function is generated
-for the \texttt{Base} type in conjunction with a
-\texttt{toCCtx\_s} for every $s$ syntactic category in the given syntax, where
-the algorithm described above is implemented for every sort.
+Functions supporting building cursor contexts are generated by Elm
+CodeGen, where a \texttt{toCCtx} function is generated for the
+\texttt{Base} type in conjunction with a \texttt{toCCtx\_s} for every
+$s$ syntactic category in the given syntax, where the algorithm
+described above is implemented for every sort.
 
-\subsubsection{Well-formed tree}
+\subsubsection{Well-Formed Tree}
 
 The well-formed tree is generated by performing pre-order traversal of the
 rest of the tree that was not traversed when generating the cursor context.
@@ -1600,7 +1603,7 @@ is replaced with its corresponding cursorless operator $\hat{o} \in \hat{\mathca
 The cursor context and well-formed tree pair as defined above will decompose
 any well-formed \abt into a unique pair of a cursor context and a well-formed tree.
 
-\subsubsection{Cursor movement - Child}
+\subsubsection{Cursor Movement - Child}
 Cursor movement is a fundamental operation, allowing the editor to move the cursor
 to a different position, changing the target of editor expressions. This is defined
 as two operations in the editor calculus in the form of
@@ -1649,7 +1652,7 @@ This has been implemented by having Elm CodeGen generate a \texttt{child} functi
 takes an integer $i$ and a decomposed tree, and returns a new cursor context
 and well-formed tree pair, where the cursor has been moved to the $i$th child.
 
-\subsubsection{Cursor movement - Parent}
+\subsubsection{Cursor Movement - Parent}
 
 Moving the cursor to the parent of the cursor is done by first updating the cursor context
 by moving the context hole a level up, such that the parent of the context hole
@@ -1669,6 +1672,13 @@ selecting values from "col-a" in "table-b", where the value in
 has no cursor, showing that the decomposition of the tree will result in a
 cursor context containing only the context hole and a well-formed tree
 with the cursor at the root of the tree.
+
+If we try to move the cursor to the parent this gives us
+\texttt{Nothing}, as the cursor is already at the root of the
+tree. Moving the cursor to child 1 moves it to the first child of the
+\texttt{Select} operator. Simple substitution is shown where the
+cursor is encapsulating the root of tree, resulting in the substitute
+being the only element under the updated cursor.
 
 \vspace{2mm}
 \begin{minipage}{\linewidth}
@@ -1690,30 +1700,22 @@ Just (Cctx_hole,Root_q_CLess Hole_q_CLess)
 \end{minipage}
 \vspace{2mm}
 
-Attempting to move the cursor to the
-parent will result in \texttt{Nothing} (empty value of the \texttt{Maybe} option type in Elm),
-as the cursor is already at the root
-of the tree. Moving the cursor to child 1 moves the cursor to the first child
-of the \texttt{Select} operator, as expected. Simple substitution
-is shown where the cursor is encapsulating the root of tree, resulting
-in the substitute being the only element under the updated cursor.
+
 
 \end{example}
 
-\subsubsection{Conditional expressions, Sequence, Recursion and Context}
+% \subsubsection{Conditional Expressions, Sequence, Recursion and Context}
 
-Conditional expressions provide a way to perform different operations based on
-modal logic of the encapsulated \abt, such as the $@o$ operator which holds
-if the cursor is encapsulating the operator $o$. This is defined as \texttt{At-op}
-along \texttt{Necessity}, \texttt{Possibly-i} and \texttt{Possibly-i} operators
-in the editor calculus (\cref{fig:satisfaction_relation_modal}). Conditionals
-can be connected with logical operators, forming the operators \texttt{Negation},
-\texttt{Conjunction}, \texttt{Disjunction-1} and \texttt{Disjunction-2}
-(\cref{fig:satisfaction_relation_connectives}).
+% Conditional expressions provide a way to perform different operations based on
+% modal logic of the encapsulated \abt, such as the $@o$ operator which holds
+% if the cursor is encapsulating the operator $o$. This is defined as \texttt{At-op}
+% along \texttt{Necessity}, \texttt{Possibly-i} and \texttt{Possibly-i} operators
+% in the editor calculus (\cref{fig:satisfaction_relation_modal}). Conditionals
+% can be connected with logical operators, forming the operators \texttt{Negation},
+% \texttt{Conjunction}, \texttt{Disjunction-1} and \texttt{Disjunction-2}
+% (\cref{fig:satisfaction_relation_connectives}).
 
-With the current state of the implementation, it is only possible to query for a given conditional expression $\phi$, which will return wether that condtion holds. The rest is yet to be implemented.
-
-\subsubsection{Generic implementation}
+\subsubsection{Generic Implementation}
 Given the generic nature of the editor calculus, the implementation could
 benefit from type classes, which would allow for more general functions
 to be written, without the need for explicit references to specific
@@ -1727,15 +1729,15 @@ substitution function for each sort $s \in \mathcal{S}$.  This
 approach of course leads an implementer to consider generalization,
 i.e. how a single function can take any cursor-encapsulated \abt and
 replace it with an operator of the same sort. A solution to this could
-be using type classes, where we might have a type class called
-\texttt{substitutable} and having an instance for each sort.  This is
+be to introduce a type class 
+\texttt{substitutable} with an instance for each sort.  This is
 not directly supported Elm but in Haskell; we would then use the
 solution shown in \cref{lst:haskell-typeclass}.  Typeclasses can
-however be simulated with Elm records, as shown in the "typeclasses"
-Elm package\cite{elm-typeclass-package}.  An example of this is shown
-in \cref{lst:elm-typeclass}.  This approach has the disadvantage of
-forcing an explicit reference to the typeclass "instance" in a generic
-function, in contrast to Haskell.
+be simulated with Elm records using "typeclasses"
+Elm package\cite{elm-typeclass-package}; see 
+\cref{lst:elm-typeclass} for an example.  % This approach has the disadvantage of
+% forcing an explicit reference to the typeclass "instance" in a generic
+% function, in contrast to Haskell.
 
 
 \begin{lstlisting}[language=Haskell,style=inline,caption={Haskell typeclass example},label={lst:haskell-typeclass}]
@@ -1777,11 +1779,11 @@ We have developed a generalized editor calculus that enables the
 creation of a syntax-directed editor calculus for a specific abstract
 syntax, and describe how to encode it into a monomorphic typed lambda
 calculus with pairs, recursion and pattern matching. The encoding is
-sound, and as a consequence, given that the type system of the
+sound, and since the type system of the
 extended lambda calculus is sound, it follows that our editor calculus
 is type safe.
 
-Based on our encoding we have implemented a type safe, generalized
+We use our encoding to implement a type safe, generalized
 syntax-directed editor in Elm.  The implementation supports basic editing
 functionalities such as cursor movement and substitutions, and
 definitions of subsets of different languages, including C, SQL, and
@@ -1802,6 +1804,7 @@ therefore to have two different paste operations corresponding to each
 of these situations.
 
 \bibliographystyle{ACM-Reference-Format}
+\balance
 \bibliography{bibliography}
 
 
