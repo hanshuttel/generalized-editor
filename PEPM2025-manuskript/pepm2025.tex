@@ -1222,6 +1222,8 @@ operational semantics of the original calculus.
   possible. Therefore, we first prove that the theorem holds for all
   axioms, as these rules does not need an inductive hypothesis.
 \end{proof}
+
+\pagebreak
 Our encoding is type safe: If a configuration
 \lr{E,a} can evolve to \lr{E',a'}, then if the encoded configuration
 is well-typed, then so is the encoding of \lr{E',a'}.
@@ -1456,7 +1458,7 @@ the CodeGen package can generate algebraic data types for every sort and its ope
 and separate them into their own separate modules.
 
 \begin{example}\label{ex:parser-to-elm-codegen}
-  Given the specification in example \cref{ex:as-sql-lang}, the parser can produce following \texttt{Declaration} for the \texttt{Q} algebraic data type in example \cref{ex:sql-data-types}:
+  Given the specification in \cref{ex:as-sql-lang}, the parser can produce following \texttt{Declaration} for the \texttt{Q} algebraic data type in example \cref{ex:sql-data-types}:
   \begin{lstlisting}[language=elm]
 Elm.customType "Q"
             [ Elm.variantWith "Select"
@@ -1499,16 +1501,17 @@ This aspect has not been considered yet, and as a temporary solution,
 a type wrapper called \texttt{Base} has been introduced, which has an entry for
 every syntactic category in the given syntax.
 
-\begin{example}\label{ex:c-spec}
-Following is an example of a generated Base type for the small SQL syntax
-  \begin{lstlisting}[language=elm,style=examplestyle]
-type Base
-    = Q Q
-    | Cmd Cmd
-    | Id Id
-...
-\end{lstlisting}
-\end{example}
+% Sune: Denne bliver der ikke refereret til nogen steder.
+% \begin{example}\label{ex:c-spec}
+% Following is an example of a generated Base type for the small SQL syntax
+%   \begin{lstlisting}[language=elm,style=examplestyle]
+% type Base
+%     = Q Q
+%     | Cmd Cmd
+%     | Id Id
+% ...
+% \end{lstlisting}
+% \end{example}
 
 This allows for any operator
 of any sort to be decomposed, although the ideal solution would be having
@@ -1730,8 +1733,8 @@ approach of course leads an implementer to consider generalization,
 i.e. how a single function can take any cursor-encapsulated \abt and
 replace it with an operator of the same sort. A solution to this could
 be to introduce a type class 
-\texttt{substitutable} with an instance for each sort.  This is
-not directly supported Elm but in Haskell; we would then use the
+\texttt{substitutable} with an instance for each sort. This is
+not directly supported in Elm, but is available in Haskell; we would then use the
 solution shown in \cref{lst:haskell-typeclass}.  Typeclasses can
 be simulated with Elm records using "typeclasses"
 Elm package\cite{elm-typeclass-package}; see 
