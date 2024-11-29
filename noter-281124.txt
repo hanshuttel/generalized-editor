@@ -1,0 +1,7 @@
+Noter 28. november 2024
+
+
+Hans er begyndt på arbejdet med at gøre manuskriptet publiceringsklart. Fordi alle overskrifter skal have store begyndelsesbogstaver for hvert ord (en amerikansk uvane) vokser artiklen ud over de 12 sider. Løsningen er foreløbig blevet at udkommentere det korte afsnit (det gamle afsnit 5.4.7) om implementation af betingelser.
+
+Skal implementationer med som en artefakt?
+

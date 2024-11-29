@@ -1,35 +1,22 @@
-\documentclass[sigplan]{acmart}
+\documentclass[sigplan,screen]{acmart}
 \usepackage{balance}
 \usepackage{microtype}
 \input{preamble}
-\newcommand{\abt}{\textsf{abt}\xspace}
-\newcommand{\ec}[1]{\ensuremath{\textsf{#1}}\xspace}
-\newcommand{\rec}{\ec{rec}\,}
-\newcommand{\chld}{\ec{child}\,}
-\newcommand{\parnt}{\ec{parent}}
-\newcommand{\nil}{\ec{nil}}
 
 \AtBeginDocument{%
   \providecommand\BibTeX{{%
     Bib\TeX}}}
 
-%% Rights management information.  This information is sent to you
-%% when you complete the rights form.  These commands have SAMPLE
-%% values in them; it is your responsibility as an author to replace
-%% the commands and values with those provided to you when you
-%% complete the rights form.
-\setcopyright{acmcopyright}
-\copyrightyear{2023}
-\acmYear{2023}
-\acmDOI{XXXXXXX.XXXXXXX}
+%% Rights management information.
 
-\acmConference[PEPM 2025]{Make sure to enter the correct
-  conference title from your rights confirmation emai}{January
-  2025}{Denver, USA}
-
-\acmPrice{15.00}
-\acmISBN{978-1-4503-XXXX-X/18/06}
-
+\copyrightyear{2025}
+\acmYear{2025}
+\setcopyright{cc}
+\setcctype{CC-BY}
+\acmConference[PEPM '25]{Proceedings of the 2025 ACM SIGPLAN International Workshop on Partial Evaluation and Program Manipulation}{January 21, 2025}{Denver, CO, USA}
+\acmBooktitle{Proceedings of the 2025 ACM SIGPLAN International Workshop on Partial Evaluation and Program Manipulation (PEPM '25), January 21, 2025, Denver, CO, USA}
+\acmDOI{10.1145/3704253.3706140}
+\acmISBN{979-8-4007-1350-7/25/01}
 
 %%
 %% Submission ID.
@@ -74,25 +61,15 @@
 \title{A Type Safe Calculus for Generating
   Syntax-Directed Editors}
 
-%%
-%% The "author" command and its associated commands are used to define
-%% the authors and their affiliations.
-%% Of note is the shared affiliation of the first two authors, and the
-%% "authornote" and "authornotemark" commands
-%% used to denote shared contribution to the research.
-
-%%\orcid{1234-5678-9012}
-
-\author{Andreas Tor Mortensen}
-\email{atmo20@student.aau.dk}
-
 
 \author{Benjamin Bennetzen}
 \email{bbenne20@student.aau.dk}
 
-
 \author{Nikolaj Rossander Kristensen}
 \email{nrkr20@student.aau.dk}
+
+\author{Andreas Tor Mortensen}
+\email{atmo20@student.aau.dk}
 
 \author{Peter Buus Steffensen}
 \authornotemark[1]
