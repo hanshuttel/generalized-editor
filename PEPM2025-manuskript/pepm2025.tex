@@ -9,14 +9,19 @@
 
 %% Rights management information.
 
-\copyrightyear{2025}
-\acmYear{2025}
+%%% The following is specific to PEPM '25 and the paper
+%%% 'A Type Safe Calculus for Generating Syntax-Directed Editors'
+%%% by Benjamin Bennetzen, Sune Skaaning Engtorp, Hans Hüttel, Nikolaj Rossander Kristensen, Andreas Tor Mortensen, and Peter Buus Steffensen.
+%%%
 \setcopyright{cc}
-%\setcctype{CC-BY}
+\acmDOI{10.1145/3704253.3706140}
+\acmYear{2025}
+\copyrightyear{2025}
+\acmISBN{979-8-4007-1350-7/25/01}
 \acmConference[PEPM '25]{Proceedings of the 2025 ACM SIGPLAN International Workshop on Partial Evaluation and Program Manipulation}{January 21, 2025}{Denver, CO, USA}
 \acmBooktitle{Proceedings of the 2025 ACM SIGPLAN International Workshop on Partial Evaluation and Program Manipulation (PEPM '25), January 21, 2025, Denver, CO, USA}
-\acmDOI{10.1145/3704253.3706140}
-\acmISBN{979-8-4007-1350-7/25/01}
+\received{2024-10-17}
+\received[accepted]{2024-11-18}
 
 %%
 %% Submission ID.
@@ -72,7 +77,6 @@
 \email{atmo20@student.aau.dk}
 
 \author{Peter Buus Steffensen}
-\authornotemark[1]
 \email{psteff19@student.aau.dk
 }
 
@@ -84,11 +88,10 @@
  \postcode{9220}
 }
 
-\author{Hans Huttel}
+\author{Hans Hüttel}
 \email{hans.huttel@di.ku.dk}
 \author{Sune Skaanning Engtorp}
 \email{suneengtorp@live.dk}
-\authornotemark[2]
 \affiliation{%
  \institution{Department of Computer Science at University of Copenhagen}
  \streetaddress{Universitetsparken 1}
@@ -105,10 +108,10 @@
 %% other information printed in the page headers. This command allows
 %% the author to define a more concise list
 %% of authors' names for this purpose.
-\renewcommand{\shortauthors}{Bennetzen et al.}
+\renewcommand{\shortauthors}{B. Bennetzen, N.R. Kristensen,
+  A.T. Mortensen, P.B. Steffensen, H. Hüttel and S.S. Engtorp}
 
 \begin{abstract}
-
   Editor calculi make it possible to describe the actions of
   syntax-directed editing and provide guarantees of safety through
   their specialized type system: Well-typed editor scripts produce
@@ -255,7 +258,7 @@ instance.
 We first present a generalization of the syntax-directed editor
 calculus by \cite{type_safe_structure_editor}.
 
-\subsection{Representing Abstract Syntax, Cursors And Holes}
+\subsection{Representing Abstract Syntax, Cursors and Holes}
 
 Following Harper \cite{harper_foundations}, we assume that an abstract
 syntax is given by a set of \emph{sorts} $\SORT$, an arity-indexed
@@ -371,7 +374,7 @@ therefore cannot be defined in a generalized manner.
     $\text{hole}_e$.
 \end{example}
 
-\subsubsection{Cursor Contexts}
+\subsection{Cursor Contexts}
 In editor expressions, we frequently refer to performing actions on,
 or with, the \abt that is currently encapsulated by the cursor. To
 support this notion we introduce cursor contexts $C$, inspired by the
@@ -461,7 +464,7 @@ We define the set of valid transitions by the rules shown in
         {\lr{\pi.E, C[a]} \ltrans{\pi} \lr{E, C[a']}}
 }{\caption{Reduction rules for editor expressions}\label{fig:editor_expression_rules}}
 
-\subsubsection{Substitution And Cursor Movement}
+\subsubsection{Substitution and Cursor Movement}
 
 Atomic prefixes $\pi$ describe the effect of a single edit action. This can
 either consist in modifying the well-formed \abt $a$ encapsulated by the
@@ -668,7 +671,7 @@ $\square o$ holds for $a$ when $o$ is found in every subtree of the
 %     }{\caption{Satisfaction relation for modal operators on $plus$}\label{fig:example_satisfaction_relation}}
 % \end{example}
 
-\subsection{Guarantees From The Original Editor Calculus}
+\subsection{Guarantees from the Original Editor Calculus}
 
 The type system of the original calculus
 \cite{type_safe_structure_editor} wguarantees that \emph{well-typed
@@ -705,7 +708,7 @@ this in \cref{sec:sound}.
 We now describe how one can represent the generalized editor calculus
 and abstract binding trees in a typed lambda calculus.
 
-\subsection{A Collection Of Lambda Calculi}
+\subsection{A Collection of Lambda Calculi}
 
 The features of the lambda calculus that we use for the encoding are
 determined by the expressive power of the editor calculus and of
@@ -728,6 +731,8 @@ An overview of the calculus and the constructs necessary to encode
 each part of it can be seen in \cref{tab:encoding_requirements}.
 
 \begin{table*}
+   \caption{Editor calculus fragments and the lambda calculus fragments
+     used for encoding them}
    \centering
    \begin{tabular}{| l | l |}
        \hline
@@ -743,8 +748,6 @@ each part of it can be seen in \cref{tab:encoding_requirements}.
        \hline
    \end{tabular}
    \vspace{1mm}
-   \caption{Editor calculus fragments and the lambda calculus fragments
-     used for encoding them}
    \label{tab:encoding_requirements}
  \end{table*}
 
@@ -993,7 +996,7 @@ recursively. \textit{parent} and \textit{insert} are simply encoded as \textit{u
   obtain \eqref{enc-pref-trans} given a transition \eqref{pref-trans}.
 \end{proof}
 
-\subsection{Control Structures And Modal Logic}
+\subsection{Control Structures and Modal Logic}
 
 To encode control structures and modal logic, we must introduce
 recursion and the $Bool$ base type. The combination of a next-step
@@ -1179,7 +1182,7 @@ It is now straightforward to encode configurations as follows.
 Note that here $\encode{E} : T \times T_C \to T$ where $T$ is the type
 of the encoding of an \abt and $T_C$ is the type of the encoding of a context.
 
-\section{Soundness Of The Encoding} \label{sec:sound}
+\section{Soundness of the Encoding} \label{sec:sound}
 
 The main result about our encoding is that it is sound w.r.t the
 operational semantics of the original calculus.
@@ -1200,7 +1203,7 @@ operational semantics of the original calculus.
   axioms, as these rules does not need an inductive hypothesis.
 \end{proof}
 
-\pagebreak
+%\pagebreak
 Our encoding is type safe: If a configuration
 \lr{E,a} can evolve to \lr{E',a'}, then if the encoded configuration
 is well-typed, then so is the encoding of \lr{E',a'}.
@@ -1327,7 +1330,7 @@ From this specification language, it is possible to extract what is assumed by t
   Notably, a binder is used in the $insert$ operator, where the alias of $id_1$, specified as $id_2$ is bound within the sub-query.
 \end{example}
 
-\subsection{Code Generation Versus A Generic Model}
+\subsection{Code Generation Versus a Generic Model}
 
 An important design decision is that of whether the implementation
 should generate specific source code for a given editor instance or if a
