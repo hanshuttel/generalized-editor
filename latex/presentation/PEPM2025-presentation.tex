@@ -1,6 +1,8 @@
 % IMPORTANT! In order for the document to compile, one needs to use XeLaTeX or LuaLaTeX as compiler. This can be done in  Overleaf by Menu -> Settings -> Compiler -> Choose XeLaTeX/LuaLaTeX
 \documentclass[t,24pt,aspectratio=169]{beamer}
 
+\setlength{\parskip}{\bigskipamount}
+
 \usepackage{KUstyle}
 \usepackage[style=authortitle,backend=biber]{biblatex}
 \usepackage[]{float}
@@ -63,7 +65,7 @@
 
     Structure editors were introduced in order to avoid syntax errors.
 
-    A structure editor builds the syntax tree directly.
+    A structure editor builds the abstract syntax tree directly.
     
 \end{frame}
 
@@ -166,21 +168,16 @@
 
 
 \begin{frame}
-    \frametitle{Background}
-    \begin{itemize}
-        \item Abstract syntax
-        \item Generalized editor calculus
-    \end{itemize}
-\end{frame}
+  \frametitle{Abstract Syntax Trees}
 
-\begin{frame}
-    \frametitle{Abstract Syntax Trees}
+  We use the presentation by Harper\footcite{harper} where an abstract
+  syntax is defined by
+  
     \begin{multicols}{2}
         \begin{itemize}
-            \item Described by Harper\footcite{harper}
-            \item Set of sorts $\mathcal{S}$
-            \item Arity-indexed family of operators $\mathcal{O}$
-            \item Sort-indexed family of variables $\mathcal{X}$
+            \item A collection of sorts $\mathcal{S}$
+            \item An arity-indexed family of operators $\mathcal{O}$
+            \item A sort-indexed family of variables $\mathcal{X}$
         \end{itemize}
 
         \columnbreak
@@ -195,10 +192,14 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Abstract Binding Trees}
+  \frametitle{Abstract Binding Trees}
+
+  Often a syntax will include binders. Following Harper, we can
+  represent a syntax with binders as follows.
+  
     \begin{multicols}{2}
         \begin{itemize}
-            \item Enriched AST with bindings
+            \item ASTs are enriched with bindings
             \item All operators are assigned generalized arity $(\vec{x_1}.x_1,...,\vec{x_n}.x_n)s$
         \end{itemize}
         \columnbreak
@@ -212,15 +213,18 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Generalized editor calculus}
+  \frametitle{Generalized editor calculus}
+
+  We now present an editor calculus for an arbitrary abstract syntax.
+  
     \begin{itemize}
-        \item Assumes that abstract syntax of a language is given by:
+        \item Assume that the abstract syntax of a language is given by:
               \begin{enumerate}
                   \item A set of sorts $\mathcal{S}$
                   \item An arity-indexed family of operators $\mathcal{O}$
                   \item A sort-indexed family of variables $\mathcal{X}$
               \end{enumerate}
-        \item Then, for every sort $s \in \mathcal{S}$, the following operators are added to $\mathcal{O}$
+        \item Then, for every sort $s \in \mathcal{S}$, we add the following operators to $\mathcal{O}$
               \begin{enumerate}
                   \item A $hole_s$ operator with arity $()s$
                   \item A $cursor_s$ operator with arity $(s)s$
@@ -229,26 +233,36 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Editor calculus}
-    \begin{itemize}
-        \item Abstract syntax of general editor calculus
-    \end{itemize}
-    \vspace{1cm}
+  \frametitle{Editor calculus}
+
+  Our generalized editor calculus is defined by the formation rules
     \[
         \begin{aligned}
-            E    & ::= \quad \pi.E \ | \ \phi \Rightarrow E_1|E_2 \ | \ E_1 \ggg E_2 \ | \ rec \ x.E \ | \ x \ | \ nil      &  & \\
-            \pi  & ::= \quad child \ n \ | \ parent \ | \ \{ o \}                                                           &  & \\
-            \phi & ::= \quad \neg \phi \ | \ \phi \land \phi \ | \ \phi \lor \phi \ | \ @o \ | \ \Diamond o \ | \ \square o
+            E    & ::= \quad \underbrace{\pi.E}_{\text{prefixing}} \mid \underbrace{\phi \Rightarrow E_1|E_2}_{\text{conditional}} \mid
+            \underbrace{E_1 \ggg E_2}_{\text{sequence}} \mid rec \ x.E \mid x \mid nil      &  &
+            \text{\alert{edit actions}}\\
+            \pi  & ::= \quad \underbrace{\textsf{child}\; n}_{\text{move down}} 
+            \mid \underbrace{\textsf{parent}}_{\text{move up}} \mid
+            \underbrace{\{ o \}}_{\text{insert operator}}                                                          &  & \text{\alert{prefixes}}\\
+            \phi & ::= \quad \neg \phi \mid\phi \land \phi \mid\phi
+            \lor \phi \mid @o \mid \Diamond o \mid\square o && \text{\alert{conditions}}
         \end{aligned}
-    \]
+      \]
+
+Unlike the Hazel editor calculus this allows us to define
+repetition-based editor scripts (using recursion).
+
+The conditions allow us to make edit actions conditional on the shape
+of the abstract syntax tree.
+
 \end{frame}
 
 \begin{frame}
     \frametitle{Cursorless trees}
-    \begin{itemize}
-        \item Trees without cursors - crucial for defining cursor contexts and well-formed trees
-    \end{itemize}
-    \vspace{1cm}
+
+    We first define trees without cursors. These are crucial for
+    defining cursor contexts and well-formed trees. 
+
     \begin{enumerate}
         \item The sorts $\hat{\mathcal{S}} = \{ \hat{s} \}_{s \in \mathcal{S}}$
         \item The family of cursorless operators $\hat{\mathcal{O}}$ is made by adding
@@ -261,24 +275,32 @@
 
 \begin{frame}
     \frametitle{Cursor context}
-    \begin{itemize}
-        \item Holds information about the current tree, up until a context hole
-    \end{itemize}
-    \vspace{1cm}
+
+    A cursor context holds information about the current tree
+    surrounding the subtree where editing takes place.
+
+    The cursor is just one more operator! We represent the cursor
+    using an additional sort $C$ and an additional operator.
+    
     \begin{enumerate}
         \item The sorts $\mathcal{S}^C = \hat{\mathcal{S}} \cup \{C\}$
         \item The family of operators $\mathcal{O}^C = \hat{\mathcal{O}}$ extended with the $[\cdot]$ operator with arity $()C$
-        \item For every operator $\hat{o} \in \hat{\mathcal{O}}$ of arity $(\vec{\hat{s}}_1.\hat{s}_1,...,\vec{\hat{s}}_n.\hat{s}_n)\hat{s}$ and for every $1 \leq i \leq n$ the operator $o_i^C$ of arity $(\vec{\hat{s}}_1.\hat{s}_1,...,\vec{\hat{s}}_i.C,...,\vec{\hat{s}}_n.\hat{s}_n)C$ to $\mathcal{O}^C$
-        \item The family of variables $\mathcal{X}^C = \hat{\mathcal{X}}$
+        \item For every operator $\hat{o} \in \hat{\mathcal{O}}$ of
+          arity
+          $(\vec{\hat{s}}_1.\hat{s}_1,...,\vec{\hat{s}}_n.\hat{s}_n)\hat{s}$
+          and for every $1 \leq i \leq n$ we introduce an operator $o_i^C$ of arity $(\vec{\hat{s}}_1.\hat{s}_1,...,\vec{\hat{s}}_i.C,...,\vec{\hat{s}}_n.\hat{s}_n)C$ to $\mathcal{O}^C$
+        \item We have an extended family of variables $\mathcal{X}^C = \hat{\mathcal{X}}$
     \end{enumerate}
 \end{frame}
 
 \begin{frame}
     \frametitle{Well-formed trees}
-    \begin{itemize}
-        \item Well-formed: contains only a single cursor
-    \end{itemize}
-    \vspace{1cm}
+
+    Trees should only contain a single cursor. If they do, we say that
+    they are \alert{well-formed}.
+
+    We can define the set of well-formed trees by
+    
     \begin{enumerate}
         \item The sorts $\dot{\mathcal{S}} = \hat{\mathcal{S}} \cup \{ \dot{s} \}_{s \in \mathcal{S}}$
         \item The family of operators $\dot{\mathcal{O}} = \hat{\mathcal{O}}$ extended with an operator of arity $(\hat{s})\dot{s}$ for every $\hat{s} \in \hat{\mathcal{S}}$
@@ -675,5 +697,6 @@ WHERE col-a =<@\textcolor{red}{=}@> 'x';
 \end{document}
 %%% Local Variables:
 %%% mode: latex
+%%% TeX-engine: luatex
 %%% TeX-master: t
 %%% End:
