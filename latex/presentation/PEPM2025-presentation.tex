@@ -445,7 +445,10 @@ of the abstract syntax tree.
 
 
 \begin{frame}[hvid]
-    \frametitle{Implementation}
+  \frametitle{Implementation}
+
+  In our implementation the important choices concern
+  
     \begin{itemize}
         \item Representing syntax
         \item Code generation vs. generic model
@@ -454,23 +457,12 @@ of the abstract syntax tree.
     \end{itemize}
 \end{frame}
 
-\begin{frame}[hvid]
-    \frametitle{Representing syntax}
-    \begin{itemize}
-        \item Abstract syntax per Robert Harper\footcite{harper}
-              \begin{itemize}
-                  \item Set of sorts $\mathcal{S}$
-                  \item Arity-indexed family of operators $\mathcal{O}$
-                  \item Sort-indexed family of variables $\mathcal{X}$
-                  \item Binders: $(\vec{x_1}.x_1)s$
-              \end{itemize}
-              \pause
-        \item How can a user provide this in a non-challenging way?
-    \end{itemize}
-\end{frame}
 
 \begin{frame}
-    \frametitle{Representing syntax (Continued)}
+  \frametitle{Representing syntax}
+
+  Early work on syntax specifications for structure editors includes
+  
     \begin{itemize}
         \item Metal\footcite{metal}
               \pause
@@ -478,19 +470,20 @@ of the abstract syntax tree.
               \pause
         \item ASN.1\footcite{asn1}
               \pause
-        \item Common problem: no support for binders
-    \end{itemize}
+            \end{itemize}
+
+            The common problem: no support for binders.
+
 \end{frame}
 
 \begin{frame}
     \frametitle{Representing syntax (Continued)}
     \begin{multicols}{2}
-        \begin{itemize}
-            \item Let's make our own specification language
+       We have created our own specification language. Here is an
+       example specification of a subset of SQL.
                   \vspace{1cm}
 
                   \includegraphics<2->[width=0.45\textwidth]{img/spec-lang-parseable-ex.png}
-        \end{itemize}
 
         \columnbreak
         \includegraphics[width=0.5\textwidth]{img/spec-lang-ex.png}
@@ -499,19 +492,27 @@ of the abstract syntax tree.
 \end{frame}
 
 \begin{frame}[hvid]
-    \frametitle{Generic model or code generation?}
+  \frametitle{Generic model or code generation?}
+
+  Should one use a generic model for the generalized editor or should
+  one generate code for an editor instance?
+  
     \begin{itemize}
         \item Generic model:
               \begin{itemize}
                   \item No need for code generation (less work and error prone)
-                  \item However less efficient and needs thorough well-formedness checks
+                  \item However, this is less efficient and needs
+                    thorough well-formedness checks 
               \end{itemize}
         \item Code generation:
               \begin{itemize}
                   \item Take advantage of algebraic data types (only well-formed terms can be created)
-                  \item However requires code generation
+                  \item However, this requires code generation
               \end{itemize}
-    \end{itemize}
+            \end{itemize}
+
+            (Notice the similarity with the question of specialization
+            in the work on partial evaluation.)
 \end{frame}
 
 \begin{frame}[hvid]
@@ -536,15 +537,15 @@ of the abstract syntax tree.
 \begin{frame}[hvid]
     \frametitle{Generating Editor Expression Code}
     \begin{multicols}{2}
-        \begin{itemize}
-            \item Unique decomposition
+       How do we decompose an AST into a cursor context and the cursor
+       context? We must be able to do this in exactly one way. The
+       algorithm for unique decomposition will
                   \begin{itemize}
                       \item Generate a path to the cursor
                       \item Generate an abt of sort $s^C \in \mathcal{S}^C$ based on the path and stop at the cursor
                       \item Generate an abt of sort $\dot{s} \in \dot{\mathcal{S}}$
                             based on the rest of the tree that was not traversed
                   \end{itemize}
-        \end{itemize}
         \columnbreak
         \includegraphics[width=0.4\textwidth]{img/slq-decompose-ex.drawio.png}
     \end{multicols}
