@@ -15,6 +15,144 @@
 \newcommand{\enc}[1]{\llbracket #1 \rrbracket}
 \newcommand{\conf}[2]{\langle #1,#2 \rangle}
 
+\newcolumntype{L}{>{$}l<{$}} % left-oriented math column type
+\newcolumntype{R}{>{$}r<{$}} % right-oriented math column type
+\newcolumntype{C}{>{$}c<{$}} % center-oriented math column type
+
+\newcommand{\runa}[1]{\ensuremath{{\normalsize{\textsc{(#1)}}}\;\;}}
+
+\newcommand{\lr}[1]{\ensuremath{\langle #1 \rangle}} % config macro: <#1>
+\newcommand{\sub}[1]{\/\textsubscript{#1}} % subscript macro
+\newcommand{\ltrans}[1]{\stackrel{#1}{\Rightarrow}} % labelled transition pil
+\newcommand{\ltransn}[1]{\stackrel{#1}{\nRightarrow}} % labelled transition pil
+\newcommand{\infeshort}[1]{\inference[\runa{#1}]} %formatting of \inference, when in a table side by side
+\newcommand{\infelong}[1]{\inference[\runa{#1}]} %formatting of \inference, when on a single line
+\newcommand{\define}{\stackrel{\text{def}}{=}} %def =
+\newcommand{\encode}[1]{\llbracket #1 \rrbracket} %encoding brackets
+\newcommand{\match}[1]{\{\mid #1 \mid\}} %encoding brackets
+\newcommand{\child}{\textsf{child }} % 'child' stands out
+\newcommand{\term}{$\lambda$-term\xspace} % lambda term
+\newcommand{\OP}{\mathcal{O}} %family of operators
+\newcommand{\OPc}{\hat{\mathcal{O}}} %cursorless family of operators
+\newcommand{\OPcc}{\dot{\mathcal{O}}} %cursorless family of operators
+\newcommand{\SORT}{\mathcal{S}} %set of sorts
+\newcommand{\SORTc}{\hat{\mathcal{S}}} %set of cursorless sorts
+\newcommand{\SORTcc}{\dot{\mathcal{S}}} %set of cursorless sorts
+\newcommand{\VAR}{\mathcal{X}} %family of variables
+\newcommand{\VARc}{\hat{\mathcal{X}}} %family of variables
+\newcommand{\VARcc}{\dot{\mathcal{X}}} %family of variables
+\newcommand{\AST}{\mathcal{A}[\VAR]} %family of asts
+\newcommand{\ABT}[1]{\mathcal{B}[\VAR #1]} %family of abts
+\newcommand{\ABTc}[1]{\hat{\mathcal{B}}[\VARc #1]} %family of cursorless abts
+\newcommand{\ABTcc}[1]{\dot{\mathcal{B}}[\VARcc #1]} %family of cursorless abts
+\newcommand{\alphac}{\rightarrow_\alpha} %alpha-conversion
+\newcommand{\betar}{\rightarrow_\beta} %beta-reduction
+\newcommand{\alphae}{\equiv_\alpha} %alpha-equivalence
+\newcommand{\betae}{\equiv_\beta} %beta-equivalence
+\newcommand{\stlc}{\ensuremath{\lambda_{->}}\xspace} %simply typed lambda calculus
+\newcommand{\hole}[1]{\llparenthesis \ \rrparenthesis_#1} %hole, subscripted with a sort
+\newcommand{\ctxhole}{[ \, \cdot \, ]} %context hole
+\newcommand{\fix}{\text{fix}\xspace} %correct fix
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+\newcommand{\federeboks}[3]{
+    \begin{figure}[H]
+    \vspace{-2.9mm}
+    \centering
+    %\fbox{%
+        \footnotesize\renewcommand{\arraystretch}{1.25}
+        \setlength{\tabcolsep} {4pt}
+        \begin{tabular}{#1}
+            \addlinespace[1.25ex]
+            #2 \\
+            \addlinespace[1.25ex]
+        \end{tabular}
+    %}
+    #3
+    %\vspace{-2mm}
+    \end{figure}
+}
+
+\newcommand{\skat}[1]{\ensuremath{\textbf{#1}}}
+\newcommand{\Edt}{\skat{Edt}}
+\newcommand{\Var}{\skat{Var}}
+\newcommand{\Types}{\skat{Types}}
+
+\newcommand{\pra}{\hookrightarrow}
+
+\newcommand{\bs}{$\textbackslash$}
+
+\lstdefinelanguage{elm}
+{
+    morekeywords={
+            alias,
+            as,
+            case,
+            else,
+            exposing,
+            if,
+            import,
+            in,
+            let,
+            module,
+            of,
+            port,
+            then,
+            type,
+            where
+        },
+    sensitive=true, % Keywords are case-sensitive
+    morecomment=[s]{\{-}{-\}}, % s is for start and end delimiter
+    morecomment=[l]{--},
+    morestring=[b]" % Defines that strings are enclosed in double quotes
+}
+
+
+\lstdefinestyle{inline}{
+    columns=fullflexible,
+    showspaces=false,
+    showtabs=false,
+    breaklines=true,
+    showstringspaces=false,
+    breakatwhitespace=true,
+    escapeinside={(*@}{@*)},
+    % commentstyle=\color{greencomments},
+    % keywordstyle=\color{bluekeywords},
+    % stringstyle=\color{redstrings},
+    % numberstyle=\color{graynumbers},
+    % numberstyle=\tiny\color{codegray},
+    % backgroundcolor=\color{myinlinecolorback},
+    basicstyle=\ttfamily\footnotesize,
+    frame=single,
+    frameround=tttt,
+    tabsize=2,
+    captionpos=b,
+    numbers=none,
+    % xleftmargin=2em,
+}
+
+\lstdefinestyle{examplestyle}{
+    % backgroundcolor=\color{myexamplecolorback},
+    % commentstyle=\color{codegreen},
+    % keywordstyle=\color{magenta},
+    % numberstyle=\tiny\color{codegray},
+    % stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    tabsize=2,
+    frame=single,
+    numbers=none,
+    % xleftmargin=2em,
+    frameround=tttt,
+    % framexleftmargin=1.5em
+}
+
+\lstset{style=inline}
+
+
 \lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
 \lstset{frame=single}
 \lstset{escapeinside={<@}{@>}}
@@ -442,6 +580,10 @@ WHERE col-a =<@\textcolor{red}{=}@> 'x';
                   \item Then any instance of the editor will have a sound type system
               \end{itemize}
     \end{itemize}
+    \begin{corollary}
+  If $\Gamma \vdash \encode{\lr{E,C[a]}} : t$ then, if $\lr{E,a}
+  \ltrans{} \lr{E',a'}$, we also have $\Gamma \vdash \encode{\lr{E',C[a']}} : t$.
+\end{corollary}
 \end{frame}
 
 \begin{frame}[hvid]
