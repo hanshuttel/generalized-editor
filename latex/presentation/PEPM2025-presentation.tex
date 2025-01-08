@@ -40,8 +40,7 @@
     \end{textblock*}
     \begin{textblock*}{\textwidth}(0\textwidth,0.1\textheight)
         \begin{beamercolorbox}[wd=7.8cm,sep=0.5cm]{hvidbox}
-            \Large \textcolor{KUrod}{Implementation of a type-safe
-            generalized syntax-directed editor}
+            \Large \textcolor{KUrod}{A Type Safe Calculus for Generating Syntax-Directed Editors}
             \vspace{0.5cm}
             \par
             \Large PEPM 2025
@@ -105,14 +104,13 @@
     \begin{multicols}{2}
         \begin{itemize}
             \item<1-> The Type-Safe Structure Editor Calculus has been
-              developed in a series of student projects at UCPH and
-              AAU \footcite{godiksen}
+                      developed in a series of student projects at UCPH and AAU \footcite{godiksen}
+
             \item<2-> The calculus was first implemented by a group of UCPH students\footcite{KU-bach}
             \footcite{aalborg}
-
         \end{itemize}
 
-        \columnbreak
+        \vfill\null\columnbreak
         \includegraphics<2->[width=0.5\textwidth]{img/ku-editor-ex.png}
     \end{multicols}
 \end{frame}
@@ -342,7 +340,7 @@ of the abstract syntax tree.
 \end{frame}
 
 \begin{frame}
-    \frametitle{Semantics (Conditionals and modal logic)}
+    \frametitle{Semantics (Conditionals)}
     \[
         \text{(Negation)} \ \frac{[\hat{a}] \not\models \phi}{[\hat{a}] \models \neg \phi}
     \]
@@ -351,7 +349,10 @@ of the abstract syntax tree.
         \text{(Conjunction)} \ \frac{[\hat{a}] \models \phi_1 \quad [\hat{a}] \models \phi_2}{[\hat{a}] \models \phi_1 \land \phi_2}
     \]
 
-    \vspace{0.3cm}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Semantics (Modal logic)}
 
     \[
         \text{(At-op)} \ \frac{}{[o(\vec{x}_1.\hat{a}_1;...;\vec{x}_n.\hat{a}_n)] \models @o}
@@ -366,6 +367,8 @@ of the abstract syntax tree.
     \]
 
 \end{frame}
+
+
 
 
 \begin{frame}[hvid]
@@ -536,9 +539,17 @@ of the abstract syntax tree.
 
 \begin{frame}[hvid]
     \frametitle{Generating Editor Expression Code}
-    \begin{multicols}{2}
-       How do we decompose an AST into a cursor context and the cursor
-       context? We must be able to do this in exactly one way. The
+       How do we decompose an AST into a cursor context and well-formed tree? 
+       
+       \bigskip
+
+       \includegraphics[width=1\textwidth]{img/slq-decompose-ex-wide.drawio.png}
+\end{frame}
+
+
+\begin{frame}[hvid]
+    \frametitle{Generating Editor Expression Code}
+       We must be able to do this in exactly one way. The
        algorithm for unique decomposition will
                   \begin{itemize}
                       \item Generate a path to the cursor
@@ -546,9 +557,6 @@ of the abstract syntax tree.
                       \item Generate an abt of sort $\dot{s} \in \dot{\mathcal{S}}$
                             based on the rest of the tree that was not traversed
                   \end{itemize}
-        \columnbreak
-        \includegraphics[width=0.4\textwidth]{img/slq-decompose-ex.drawio.png}
-    \end{multicols}
 \end{frame}
 
 \begin{frame}[hvid]
@@ -556,9 +564,7 @@ of the abstract syntax tree.
     \begin{itemize}
         \item Cursor movement (child and parent)
     \end{itemize}
-    \includegraphics[width=0.3\textwidth]{img/slq-decomp-only.drawio.png}
-    \includegraphics[width=0.3\textwidth]{img/sql-child1.drawio.png}
-    \includegraphics[width=0.3\textwidth]{img/sql-child2.drawio.png}
+    \includegraphics[width=1\textwidth]{img/sql-decomposition-and-movement.drawio.png}
 \end{frame}
 
 \begin{frame}[hvid]
@@ -644,18 +650,8 @@ WHERE col-a =<@\textcolor{red}{=}@> 'x';
 \end{frame}
 
 \begin{frame}[hvid]
-    \frametitle{C}
-    \includegraphics[width=\textwidth]{img/c-repl.png}
-\end{frame}
-
-\begin{frame}[hvid]
-    \frametitle{SQL}
+    \frametitle{Generated editor for SQL}
     \includegraphics[width=\textwidth]{img/sql-repl.png}
-\end{frame}
-
-\begin{frame}[hvid]
-    \frametitle{\LaTeX}
-    \includegraphics[width=0.9\textwidth]{img/latex-repl.png}
 \end{frame}
 
 
